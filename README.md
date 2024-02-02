@@ -1,6 +1,6 @@
 # babyfood
 
-A new Flutter project.
+some recipes for baby feeding
 
 ## Getting Started
 
