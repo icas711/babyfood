@@ -3,7 +3,7 @@ import 'package:babyfood/core/utils/constants.dart';
 import 'package:babyfood/feature/domain/entities/convenience_food_entity.dart';
 import 'package:babyfood/feature/presentation/pages/foods/widget/recipe_list_widget.dart';
 import 'package:babyfood/feature/presentation/widgets/bolding_text.dart';
-import 'package:babyfood/feature/presentation/widgets/network_provider.dart';
+import 'package:babyfood/core/utils/network_provider.dart';
 import 'package:babyfood/feature/presentation/widgets/food_cache_image_widget.dart';
 import 'package:babyfood/feature/presentation/widgets/question_button_nutritial_rating.dart';
 import 'package:babyfood/feature/presentation/widgets/selectable_button.dart';

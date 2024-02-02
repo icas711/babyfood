@@ -27,7 +27,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'feature/data/repositories/food_repository_impl.dart';
 import 'feature/domain/usecases/get_all_foods.dart';
-import 'feature/domain/usecases/search_person.dart';
+import 'feature/domain/usecases/search_food.dart';
 import 'feature/presentation/bloc/food_list_cubit/convenience_food_list_cubit.dart';
 import 'feature/presentation/bloc/search_bloc/search_bloc.dart';
 

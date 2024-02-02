@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
-import 'network.dart';
+import '../platform/network_ad.dart';
 
 abstract class NetworkProvider {
   static final NetworkProvider instance = _createInstance();

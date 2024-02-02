@@ -5,7 +5,7 @@ import 'package:babyfood/feature/presentation/widgets/text_on_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
-import '../../widgets/network_provider.dart';
+import '../../../../core/utils/network_provider.dart';
 
 class HomeDetailsScreen extends StatefulWidget {
   /// Constructs a [DetailsScreen].

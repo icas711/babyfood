@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:babyfood/core/error/failure.dart';
-import 'package:babyfood/feature/domain/usecases/search_person.dart';
+import 'package:babyfood/feature/domain/usecases/search_food.dart';
 import 'package:babyfood/feature/domain/usecases/search_recipe.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_event.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_state.dart';

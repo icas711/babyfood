@@ -4,7 +4,7 @@ import 'package:babyfood/feature/domain/entities/recipe_entity.dart';
 import 'package:babyfood/feature/presentation/pages/foods/full_screen_image.dart';
 import 'package:babyfood/feature/presentation/widgets/bolding_text.dart';
 import 'package:babyfood/feature/presentation/widgets/html_cache_image.dart';
-import 'package:babyfood/feature/presentation/widgets/network_provider.dart';
+import 'package:babyfood/core/utils/network_provider.dart';
 import 'package:babyfood/feature/presentation/widgets/food_cache_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
