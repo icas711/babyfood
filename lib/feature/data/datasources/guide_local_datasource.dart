@@ -6,10 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class GuideLocalDataSource {
-  /// Gets the cached [List<PersonModel>] which was gotten the last time
-  /// the user had an internet connection.
-  ///
-  /// Throws [CacheException] if no cached data is present.
 
   Future<List<GuideModel>> getLastGuideFromCache();
   Future<void> guidesToCache(List<GuideModel> foodNames);

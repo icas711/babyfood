@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/datasources/url.dataurls';
+
 class PersonCacheImage extends StatelessWidget {
   final String imageUrl;
   final bool? isList;
@@ -56,8 +58,8 @@ final bool? isMini;
 
   @override
   Widget build(BuildContext context) {
-    String newImageUrl=imageUrl.replaceAll('img/babyfood/icons','img/babyfood/icons/mini');
-    newImageUrl=newImageUrl.replaceAll('img/babyfood/recipes','img/babyfood/recipes/mini');
+    String newImageUrl=imageUrl.replaceAll(foodUrl,'${foodUrl}/mini');
+    newImageUrl=newImageUrl.replaceAll(recipeUrl,'${recipeUrl}/mini');
     newImageUrl=newImageUrl.replaceAll('.png', 'mini.png');
     return CachedNetworkImage(
       width: width,

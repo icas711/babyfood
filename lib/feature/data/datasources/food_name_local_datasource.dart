@@ -6,10 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class FoodNameLocalDataSource {
-  /// Gets the cached [List<PersonModel>] which was gotten the last time
-  /// the user had an internet connection.
-  ///
-  /// Throws [CacheException] if no cached data is present.
 
   Future<List<FoodNameModel>> getLastFoodNameFromCache();
   Future<void> foodNamesToCache(List<FoodNameModel> foodNames);
@@ -29,7 +25,6 @@ class FoodNameLocalDataSourceImpl implements FoodNameLocalDataSource {
   Future<List<FoodNameModel>> getLastFoodNameFromCache() {
     final jsonPersonsList = sharedPreferences.getStringList(
         CACHED_FOOD_NAMES_LIST);
-    //if(jsonPersonsList!=null) {
     if (jsonPersonsList!.isNotEmpty) {
       debugPrint('Get FoodNames from Cache: ${jsonPersonsList!.length}');
       return Future.value(jsonPersonsList!

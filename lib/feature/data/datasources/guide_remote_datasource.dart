@@ -4,10 +4,10 @@ import 'package:babyfood/core/error/exception.dart';
 import 'package:babyfood/feature/data/models/guides_model.dart';
 import 'package:http/http.dart' as http;
 
+import 'url.dataurls';
+
 abstract class GuideRemoteDataSource {
-  /// Calls the https://babylabpro.ru/lib/products/?page=1 endpoint.
-  ///
-  /// Throws a [ServerException] for all error codes.
+
   Future<List<GuideModel>> getAllGuides(int page);
 
 }
@@ -19,7 +19,7 @@ class GuideRemoteDataSourceImpl implements GuideRemoteDataSource {
 
   @override
   Future<List<GuideModel>> getAllGuides(int page) => _getGuideFromUrl(
-      'https://babylabpro.ru/lib/guides/');
+      '${targetUrl}guides/');
 
   Future<List<GuideModel>> _getGuideFromUrl(String url) async {
     final response = await client

@@ -5,10 +5,6 @@ import 'package:babyfood/feature/data/models/recipe_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class RecipeLocalDataSource {
-  /// Gets the cached [List<PersonModel>] which was gotten the last time
-  /// the user had an internet connection.
-  ///
-  /// Throws [CacheException] if no cached data is present.
 
   Future<List<RecipeModel>> getLastRecipesFromCache();
   Future<void> recipesToCache(List<RecipeModel> recipes);
