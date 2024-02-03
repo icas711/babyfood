@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
 import '../platform/network_ad.dart';
-///Yandexad
+
 abstract class NetworkProvider {
   static final NetworkProvider instance = _createInstance();
 
