@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
 import '../platform/network_ad.dart';
-
+///Yandexad
 abstract class NetworkProvider {
   static final NetworkProvider instance = _createInstance();
 
@@ -30,7 +30,7 @@ abstract class NetworkProvider {
 class _AndroidNetworkProvider extends NetworkProvider {
   @override
   final List<Network> bannerNetworks2 = const [
-    Network(title: 'Yandex', adUnitId: 'R-M-5620774-3'),
+    Network(title: 'Yandex', adUnitId: 'R-M-5620774-3g'),
 
   ];
   @override
