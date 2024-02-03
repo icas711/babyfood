@@ -1,0 +1,128 @@
+PODS:
+  - DivKit (28.13.0):
+    - DivKit_LayoutKit (= 28.13.0)
+    - DivKit_Serialization (= 28.13.0)
+    - VGSLCommonCore (~> 2.4)
+    - VGSLNetworking (~> 2.4)
+  - DivKit_LayoutKit (28.13.0):
+    - DivKit_LayoutKitInterface (= 28.13.0)
+    - VGSLCommonCore (~> 2.4)
+  - DivKit_LayoutKitInterface (28.13.0):
+    - VGSLBase (~> 2.4)
+    - VGSLBaseTiny (~> 2.4)
+    - VGSLBaseUI (~> 2.4)
+  - DivKit_Serialization (28.13.0):
+    - VGSLCommonCore (~> 2.4)
+  - Flutter (1.0.0)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - rate_my_app (2.0.0):
+    - Flutter
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - sqflite (0.0.3):
+    - Flutter
+    - FlutterMacOS
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - VGSL_Fundamentals (2.4.1):
+    - VGSL_Fundamentals_Tiny (= 2.4.1)
+  - VGSL_Fundamentals_Tiny (2.4.1)
+  - VGSLBase (2.4.1):
+    - VGSL_Fundamentals (= 2.4.1)
+    - VGSLBaseTiny (= 2.4.1)
+    - VGSLBaseUI (= 2.4.1)
+  - VGSLBaseTiny (2.4.1):
+    - VGSL_Fundamentals_Tiny (= 2.4.1)
+  - VGSLBaseUI (2.4.1):
+    - VGSLBaseTiny (= 2.4.1)
+  - VGSLCommonCore (2.4.1):
+    - VGSLBase (= 2.4.1)
+  - VGSLNetworking (2.4.1):
+    - VGSLBase (= 2.4.1)
+  - yandex_mobileads (6.2.0):
+    - Flutter
+    - YandexMobileAds (~> 6.3.0)
+  - YandexMobileAds (6.3.0):
+    - DivKit (= 28.13.0)
+    - YandexMobileAds/Static (= 6.3.0)
+  - YandexMobileAds/Static (6.3.0):
+    - DivKit (= 28.13.0)
+    - YandexMobileMetrica (< 5.0.0, >= 4.0.0)
+  - YandexMobileMetrica (4.5.2):
+    - YandexMobileMetrica/Static (= 4.5.2)
+  - YandexMobileMetrica/Static (4.5.2):
+    - YandexMobileMetrica/Static/Core (= 4.5.2)
+    - YandexMobileMetrica/Static/Crashes (= 4.5.2)
+  - YandexMobileMetrica/Static/Core (4.5.2)
+  - YandexMobileMetrica/Static/Crashes (4.5.2):
+    - YandexMobileMetrica/Static/Core
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - rate_my_app (from `.symlinks/plugins/rate_my_app/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - sqflite (from `.symlinks/plugins/sqflite/darwin`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - yandex_mobileads (from `.symlinks/plugins/yandex_mobileads/ios`)
+
+SPEC REPOS:
+  trunk:
+    - DivKit
+    - DivKit_LayoutKit
+    - DivKit_LayoutKitInterface
+    - DivKit_Serialization
+    - VGSL_Fundamentals
+    - VGSL_Fundamentals_Tiny
+    - VGSLBase
+    - VGSLBaseTiny
+    - VGSLBaseUI
+    - VGSLCommonCore
+    - VGSLNetworking
+    - YandexMobileAds
+    - YandexMobileMetrica
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  rate_my_app:
+    :path: ".symlinks/plugins/rate_my_app/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/darwin"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  yandex_mobileads:
+    :path: ".symlinks/plugins/yandex_mobileads/ios"
+
+SPEC CHECKSUMS:
+  DivKit: 65af423ea03c32b6ecaa63a64d4a2ea26c217f3b
+  DivKit_LayoutKit: 3f88fab9edefb4938b9ccb5359ecbce4e1eeba69
+  DivKit_LayoutKitInterface: 90449756ba956a7fbf3b168c01f7a0b7fc6a9de0
+  DivKit_Serialization: 1b536e30c49163548bb62120320097c8ab41936d
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  rate_my_app: 80fba94c4885cd31738231b7b1f51c1ad726f5c7
+  shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
+  sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
+  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
+  VGSL_Fundamentals: 4a965a687c76a5a435d7aaeb6b7182e82408bf4c
+  VGSL_Fundamentals_Tiny: feab274b20c5838fbe09b887db0f6cfa28e26a1c
+  VGSLBase: 37b95dd4ea137f73e8f9a8bd8ec474d8b4d75a68
+  VGSLBaseTiny: 0a0a4992a348184e8580cf73efa8eb373d750f6b
+  VGSLBaseUI: 62f147155e7b7049a32a30ac87b5bd8b83e636c5
+  VGSLCommonCore: dd33088af6633d1c09f0c9bb8027920b99e2e0c8
+  VGSLNetworking: e12d616b447522bf524c689d28f55cfbb20473cd
+  yandex_mobileads: efe6f6ca8ba6bdf25d323041a70fe64bf973cce3
+  YandexMobileAds: 790d7b35909e9c2ed55d56416026c6459943e358
+  YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
+
+PODFILE CHECKSUM: a5dd15803c05a42a9ae1068254e24631f03bf853
+
+COCOAPODS: 1.14.3
