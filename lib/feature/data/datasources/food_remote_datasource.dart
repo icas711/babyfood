@@ -29,9 +29,11 @@ class ConvenienceFoodRemoteDataSourceImpl
         port: portSql,
         user: userSql,
         db: dbSql,
-        password: passwordSql));
-
-    var results = await conn.query('select * from babyfood');
+        password: passwordSql,
+    )
+    );
+print(page);
+    var results = await conn.query('select * from babyfood ORDER BY name ASC LIMIT ${page*20-20}, ${page*20}');
     List<ConvenienceFoodModel> m1 = [];
     for (var row in results) {
       var results2 = await conn.query(

@@ -18,7 +18,7 @@ void clearProducts() {
   emit(FoodEmpty());
 }
   void loadPerson() async {
-    debugPrint('State is: $state');
+   // debugPrint('State is: $state');
     if (state is FoodLoading) return;
     final currentState = state;
 

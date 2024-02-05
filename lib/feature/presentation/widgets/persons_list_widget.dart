@@ -29,7 +29,8 @@ class PersonsList extends StatelessWidget {
   Widget build(BuildContext context) {
     setupScrollController(context);
 
-    return BlocBuilder<ConvenienceFoodListCubit, ConvenienceFoodState>(builder: (context, state) {
+    return BlocBuilder<ConvenienceFoodListCubit, ConvenienceFoodState>(
+        builder: (context, state) {
       List<ConvenienceFoodEntity> foods = [];
       bool isLoading = false;
 
@@ -48,13 +49,15 @@ class PersonsList extends StatelessWidget {
       }
       Size size = MediaQuery.of(context).size;
       return GridView.builder(
-        itemCount: foods.length,
+        itemCount: foods.length + (isLoading ? 1 : 0),
+        controller: scrollController,
 
         itemBuilder: (context, index) {
           if (index < foods.length) {
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 8.0),
-              child: PersonCard(food: foods[index],isMini: true),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+              child: PersonCard(food: foods[index], isMini: true),
             );
           } else {
             Timer(const Duration(milliseconds: 30), () {
@@ -67,13 +70,15 @@ class PersonsList extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: MediaQuery.of(context).size.width > Routes.smallScreen
               ? (MediaQuery.of(context).size.width > Routes.mediumScreen
-                  ? (MediaQuery.of(context).size.width > Routes.largeScreen ? 6 : 4)
+                  ? (MediaQuery.of(context).size.width > Routes.largeScreen
+                      ? 6
+                      : 4)
                   : 3)
               : 2,
           mainAxisSpacing: 1,
           //mainAxisExtent: 300,
           crossAxisSpacing: 1,
-          childAspectRatio: 9/9,
+          childAspectRatio: 9 / 9,
         ),
       );
     });

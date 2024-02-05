@@ -25,7 +25,9 @@ class RecipeRemoteDataSourceImpl implements RecipeRemoteDataSource {
         user: userSql,
         db: dbSql,
         password: passwordSql));
-
+    if (conn == null) {
+      print('error--------------------------------------');
+    }
     var results = await conn.query('select * from babyrecipe');
     List<RecipeModel> m1 = [];
     for (var row in results) {
