@@ -30,7 +30,7 @@ abstract class NetworkProvider {
 class _AndroidNetworkProvider extends NetworkProvider {
   @override
   final List<Network> bannerNetworks2 = const [
-    Network(title: 'Yandex', adUnitId: 'R-M-5620774-3g'),
+    Network(title: 'Yandex', adUnitId: 'R-M-5620774-3'),
 
   ];
   @override
