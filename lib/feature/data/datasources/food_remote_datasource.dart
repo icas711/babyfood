@@ -32,7 +32,7 @@ class ConvenienceFoodRemoteDataSourceImpl
         password: passwordSql,
     )
     );
-print(page);
+
     var results = await conn.query('select * from babyfood ORDER BY name ASC LIMIT ${page*20-20}, ${page*20}');
     List<ConvenienceFoodModel> m1 = [];
     for (var row in results) {
