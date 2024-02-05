@@ -1,10 +1,5 @@
-import 'dart:collection';
-import 'dart:convert';
 
-import 'package:babyfood/core/error/exception.dart';
 import 'package:babyfood/feature/data/models/convenience_food_model.dart';
-import 'package:dartz/dartz_unsafe.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mysql1/mysql1.dart';
 
@@ -32,8 +27,7 @@ class ConvenienceFoodRemoteDataSourceImpl
         password: passwordSql,
     )
     );
-
-    var results = await conn.query('select * from babyfood ORDER BY name ASC LIMIT ${page*20-20}, ${page*20}');
+    var results = await conn.query('select * from babyfood ORDER BY name ASC LIMIT ${page*20-20}, 20');
     List<ConvenienceFoodModel> m1 = [];
     for (var row in results) {
       var results2 = await conn.query(
