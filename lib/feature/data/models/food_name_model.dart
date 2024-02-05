@@ -7,11 +7,7 @@ class FoodNameModel extends FoodNameEntity {
      name: name,
   );
 
-  //factory RecipeModel.fromJson(Map<String, dynamic> json) => _$RecipeModelFromJson(json);
-  // Map<String, dynamic> toJson() => _$RecipeModelToJson(this);
-
-
-  factory FoodNameModel.fromJson(Map<String, dynamic> json) {
+  factory FoodNameModel.fromJson(var json) {
 
     return FoodNameModel(
        name: json['name'] as String,

@@ -37,6 +37,27 @@ class ConvenienceFoodModel extends ConvenienceFoodEntity {
           recipes: recipes,
         );
 
+  factory ConvenienceFoodModel.fromSql(var sql, var recipeList) {
+    return ConvenienceFoodModel(
+      id: sql['id'] as int,
+      name: sql['name'] as String,
+      ageofIntroduce: sql['ageofIntroduce'].toString() as String,
+      commonAllergen: sql['commonAllergen'] == 0 ? false : true as bool,
+      nutritionRating: sql['nutritionRating'].toString() as String,
+      poopFriendly: sql['poopFriendly'] == 0 ? false : true as bool,
+      highChockinHazard: sql['highChockinHazard'] == 0 ? false : true as bool,
+      organicIfPossible: sql['organicIfPossible'] == 0 ? false : true as bool,
+      howToOffer: sql['howToOffer'].toString() as String,
+      image: sql['image'].toString() as String,
+      characteristics: sql['characteristics'].toString() as String,
+      howToPrepare: sql['howToPrepare'].toString() as String,
+      durabilityAndStorage: sql['durabilityAndStorage'].toString() as String,
+      didYouKnow: sql['didYouKnow'].toString() as String,
+      videos: sql['videos'].toString() as String,
+      recipes: recipeList,
+    );
+  }
+
   factory ConvenienceFoodModel.fromJson(Map<String, dynamic> json) {
     final originList = json['recipes'] as List;
     List<ConvenienceFoodListModel> recipeList = originList
@@ -103,6 +124,15 @@ class ConvenienceFoodListModel extends RecipeListEntity {
       name: json['name'] as String,
       image: json['image'] as String,
       ageofIntroduce: json['ageofIntroduce'].toString() as String,
+    );
+  }
+
+  factory ConvenienceFoodListModel.fromSql(var sql) {
+    return ConvenienceFoodListModel(
+      id: sql['id'] as int,
+      name: sql['name'] as String,
+      image: sql['image'] as String,
+      ageofIntroduce: sql['ageofIntroduce'].toString() as String,
     );
   }
 

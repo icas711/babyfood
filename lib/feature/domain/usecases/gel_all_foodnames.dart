@@ -15,7 +15,7 @@ class GetAllFoodNames extends UseCase<List<FoodNameEntity>, PageFoodNameParams> 
   @override
   Future<Either<Failure, List<FoodNameEntity>>> call(
       PageFoodNameParams params) async {
-    return await foodNameRepository.getAllFoodNames(params.page);
+    return await foodNameRepository.getAllFoodNames();
   }
 }
 

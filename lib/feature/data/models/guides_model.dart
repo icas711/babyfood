@@ -28,7 +28,15 @@ class GuideModel extends GuideEntity {
       text: json['text'] as String,
     );
   }
-
+  factory GuideModel.fromSql(var sql) {
+    return GuideModel(
+      id: sql['id'] as int,
+      name: sql['name'].toString() as String,
+      description: sql['description'].toString() as String,
+      image: sql['image'].toString() as String,
+      text: sql['text'].toString() as String,
+    );
+  }
   Map<String, dynamic> toJson() {
     return {
       'id': id,

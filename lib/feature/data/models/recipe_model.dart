@@ -40,6 +40,18 @@ class RecipeModel extends RecipeEntity {
         food: foodList,
     );
   }
+  factory RecipeModel.fromSql(var sql, var foodList) {
+    return RecipeModel(
+      id: sql['id'] as int,
+      name: sql['name'].toString() as String,
+      image: sql['image'].toString() as String,
+      yield: sql['yield'].toString() as String,
+      ageofIntroduce: sql['ageofIntroduce'].toString() as String,
+      cookingTime: sql['cookingTime'].toString() as String,
+      recipe: sql['recipe'].toString() as String,
+      food: foodList,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
@@ -71,6 +83,12 @@ class FoodModel extends FoodEntity {
     return FoodModel(
       id: json['id'] as int,
       name: json['name'] as String,
+    );
+  }
+  factory FoodModel.fromSql(var sql) {
+    return FoodModel(
+      id: sql['id'] as int,
+      name: sql['name'] as String,
     );
   }
 

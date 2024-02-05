@@ -3,5 +3,5 @@ import 'package:babyfood/feature/domain/entities/foodnames.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class FoodNameRepository{
-  Future<Either<Failure, List<FoodNameEntity>>> getAllFoodNames(int page);
+  Future<Either<Failure, List<FoodNameEntity>>> getAllFoodNames();
 }

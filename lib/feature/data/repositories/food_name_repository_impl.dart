@@ -22,9 +22,9 @@ class FoodNameRepositoryImpl implements FoodNameRepository {
     localDataSource.emptyFoodNamesInCache();
   }
   @override
-  Future<Either<Failure, List<FoodNameEntity>>> getAllFoodNames(int page) async {
+  Future<Either<Failure, List<FoodNameEntity>>> getAllFoodNames() async {
     return await _getFoodNames(() {
-      return remoteDataSource.getAllFoodNames(page);
+      return remoteDataSource.getAllFoodNames();
     });
   }
 
