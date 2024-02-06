@@ -33,7 +33,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
   var adRequest = const AdRequest();
   var isLoading = false;
   var isBannerAlreadyCreated = false;
-  bool isSticky = false;
+  bool isSticky = true;
   late BannerAd banner;
 
   Map<String, bool> selectedButtons = {
@@ -66,205 +66,215 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
       appBar: AppBar(
         title: Text(widget.person.name),
       ),
-      body: SingleChildScrollView(
-        //padding: const EdgeInsets.symmetric(horizontal: 0),
-        child: Wrap(
-          //direction: isScreenWide ? Axis.horizontal : Axis.vertical,
+      body: Column(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: isBannerAlreadyCreated ? AdWidget(bannerAd: banner) : null,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              //padding: const EdgeInsets.symmetric(horizontal: 0),
+              child: Wrap(
+                //direction: isScreenWide ? Axis.horizontal : Axis.vertical,
 
-          children: [
-            LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              return Container(
-                width: isScreenWide
-                    ? constraints.maxWidth /
-                        2 //MediaQuery.sizeOf(context).width / 2.4
-                    : constraints.maxWidth,
-                child: Column(
-                  children: [
-                    /*Container(
-                      child: Image.network(person.image, fit: BoxFit.fill),
-                    ),*/
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: double.infinity,
-                        child: AspectRatio(
-                          aspectRatio: 4 / 3,
-                          child: PersonCacheImage(
-                            //height: 160,
-                            imageUrl: widget.person.image,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        widget.person.name,
-                        style: const TextStyle(
-                          fontSize: 28,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      color: Colors.blueGrey.shade100,
+                children: [
+                  LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                    return Container(
+                      width: isScreenWide
+                          ? constraints.maxWidth /
+                              2 //MediaQuery.sizeOf(context).width / 2.4
+                          : constraints.maxWidth,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          PartBoldText(
-                            part1: 'Начинать вводить в рацион: с ',
-                            part2: '${widget.person.ageofIntroduce} месяцев',
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Wrap(
-                                alignment: WrapAlignment.center,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                //mainAxisAlignment: MainAxisAlignment.center,
-                                //direction: isScreenWide ? Axis.horizontal : Axis.vertical,
-                                children: [
-                                  PartBoldText(
-                                      part1: 'Нутритивная польза:', part2: ''),
-                                  Container(
-                                    height: 20,
-                                    width: 120,
-                                    child: StarRating(
-                                      rating: double.parse(
-                                          widget.person.nutritionRating),
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                  Container(
-                                      width: 30,
-                                      child: NutritialRatingOwerview()),
-                                ]),
-                          ),
-                          PartBoldText(
-                            part1: 'Общий аллерген: ',
-                            part2: widget.person.commonAllergen == true
-                                ? 'Да'
-                                : 'Нет',
-                          ),
-                          if (widget.person.poopFriendly)
-                            PartBoldText(
-                              part1: 'Легкий стул: ',
-                              part2: widget.person.poopFriendly == true
-                                  ? 'Да'
-                                  : 'Нет',
+                          /*Container(
+                            child: Image.network(person.image, fit: BoxFit.fill),
+                          ),*/
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: double.infinity,
+                              child: AspectRatio(
+                                aspectRatio: 4 / 3,
+                                child: PersonCacheImage(
+                                  //height: 160,
+                                  imageUrl: widget.person.image,
+                                ),
+                              ),
                             ),
-                          if (widget.person.highChockinHazard)
-                            PartBoldText(
-                              part1: 'Опасность удушья: ',
-                              part2: widget.person.highChockinHazard == true
-                                  ? 'Да'
-                                  : 'Нет',
-                            ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: kDefaultPadding,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: LayoutBuilder(builder:
-                            (BuildContext context, BoxConstraints constraints) {
-                          double buttonWidth = constraints.maxWidth / 2.2;
-                          return Wrap(
-                            spacing: 10,
-                            runSpacing: 10,
-                            alignment: WrapAlignment.spaceBetween,
-                            children: foodButtons(buttonWidth),
-                          );
-                        }),
-                      ),
-                    ),
-                    if (isBannerAlreadyCreated) AdWidget(bannerAd: banner),
-                  ],
-                ),
-              );
-            }),
-            LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              return Container(
-                width: isScreenWide
-                    ? constraints.maxWidth /
-                        2 //MediaQuery.sizeOf(context).width / 2.4
-                    : constraints.maxWidth,
-                child: Column(children: [
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  if (selectedButtons['HowToOffer']!) ...[
-                    HtmlTextOnScreen(
-                        data: widget.person.howToOffer,
-                        width: constraints.maxWidth,
-                        isScreenWide: isScreenWide),
-                  ],
-                  if (selectedButtons['Character']!) ...[
-                    HtmlTextOnScreen(
-                        data: widget.person.characteristics,
-                        width: constraints.maxWidth,
-                        isScreenWide: isScreenWide),
-                  ],
-                  if (selectedButtons['HowToPrepare']!) ...[
-                    HtmlTextOnScreen(
-                        data: widget.person.howToPrepare,
-                        width: constraints.maxWidth,
-                        isScreenWide: isScreenWide),
-                  ],
-                  if (selectedButtons['DurabilityAndStorage']!) ...[
-                    HtmlTextOnScreen(
-                        data: widget.person.durabilityAndStorage,
-                        width: constraints.maxWidth,
-                        isScreenWide: isScreenWide),
-                  ],
-                  if (selectedButtons['DidYouKnow']!) ...[
-                    HtmlTextOnScreen(
-                        data: widget.person.didYouKnow,
-                        width: constraints.maxWidth,
-                        isScreenWide: isScreenWide),
-                  ],
-                  if (selectedButtons['Recipes']!) ...[
-                    Column(
-                      children: [
-                        const SizedBox(
-                          height: 16.0,
-                        ),
-                        const Text(
-                          'Рецепты:',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 16.0,
-                        ),
-                        if (widget.person.recipes.length != 0) ...[
-                          RecipeList(
-                            recipe: widget.person.recipes,
                           ),
                           const SizedBox(
-                            height: 16.0,
+                            height: 6,
                           ),
-                        ]
-                      ],
-                    ),
-                  ],
-                ]),
-              );
-            }),
-          ],
-        ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              widget.person.name,
+                              style: const TextStyle(
+                                fontSize: 28,
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            color: Colors.blueGrey.shade100,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                PartBoldText(
+                                  part1: 'Начинать вводить в рацион: с ',
+                                  part2: '${widget.person.ageofIntroduce} месяцев',
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Wrap(
+                                      alignment: WrapAlignment.center,
+                                      crossAxisAlignment: WrapCrossAlignment.center,
+                                      //mainAxisAlignment: MainAxisAlignment.center,
+                                      //direction: isScreenWide ? Axis.horizontal : Axis.vertical,
+                                      children: [
+                                        PartBoldText(
+                                            part1: 'Нутритивная польза:', part2: ''),
+                                        Container(
+                                          height: 20,
+                                          width: 120,
+                                          child: StarRating(
+                                            rating: double.parse(
+                                                widget.person.nutritionRating),
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        Container(
+                                            width: 30,
+                                            child: NutritialRatingOwerview()),
+                                      ]),
+                                ),
+                                PartBoldText(
+                                  part1: 'Общий аллерген: ',
+                                  part2: widget.person.commonAllergen == true
+                                      ? 'Да'
+                                      : 'Нет',
+                                ),
+                                if (widget.person.poopFriendly)
+                                  PartBoldText(
+                                    part1: 'Легкий стул: ',
+                                    part2: widget.person.poopFriendly == true
+                                        ? 'Да'
+                                        : 'Нет',
+                                  ),
+                                if (widget.person.highChockinHazard)
+                                  PartBoldText(
+                                    part1: 'Опасность удушья: ',
+                                    part2: widget.person.highChockinHazard == true
+                                        ? 'Да'
+                                        : 'Нет',
+                                  ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: kDefaultPadding,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              child: LayoutBuilder(builder:
+                                  (BuildContext context, BoxConstraints constraints) {
+                                double buttonWidth = constraints.maxWidth / 2.2;
+                                return Wrap(
+                                  spacing: 10,
+                                  runSpacing: 10,
+                                  alignment: WrapAlignment.spaceBetween,
+                                  children: foodButtons(buttonWidth),
+                                );
+                              }),
+                            ),
+                          ),
+                         // if (isBannerAlreadyCreated) AdWidget(bannerAd: banner),
+                        ],
+                      ),
+                    );
+                  }),
+                  LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                    return Container(
+                      width: isScreenWide
+                          ? constraints.maxWidth /
+                              2 //MediaQuery.sizeOf(context).width / 2.4
+                          : constraints.maxWidth,
+                      child: Column(children: [
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        if (selectedButtons['HowToOffer']!) ...[
+                          HtmlTextOnScreen(
+                              data: widget.person.howToOffer,
+                              width: constraints.maxWidth,
+                              isScreenWide: isScreenWide),
+                        ],
+                        if (selectedButtons['Character']!) ...[
+                          HtmlTextOnScreen(
+                              data: widget.person.characteristics,
+                              width: constraints.maxWidth,
+                              isScreenWide: isScreenWide),
+                        ],
+                        if (selectedButtons['HowToPrepare']!) ...[
+                          HtmlTextOnScreen(
+                              data: widget.person.howToPrepare,
+                              width: constraints.maxWidth,
+                              isScreenWide: isScreenWide),
+                        ],
+                        if (selectedButtons['DurabilityAndStorage']!) ...[
+                          HtmlTextOnScreen(
+                              data: widget.person.durabilityAndStorage,
+                              width: constraints.maxWidth,
+                              isScreenWide: isScreenWide),
+                        ],
+                        if (selectedButtons['DidYouKnow']!) ...[
+                          HtmlTextOnScreen(
+                              data: widget.person.didYouKnow,
+                              width: constraints.maxWidth,
+                              isScreenWide: isScreenWide),
+                        ],
+                        if (selectedButtons['Recipes']!) ...[
+                          Column(
+                            children: [
+                              const SizedBox(
+                                height: 16.0,
+                              ),
+                              const Text(
+                                'Рецепты:',
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 16.0,
+                              ),
+                              if (widget.person.recipes.length != 0) ...[
+                                RecipeList(
+                                  recipe: widget.person.recipes,
+                                ),
+                                const SizedBox(
+                                  height: 16.0,
+                                ),
+                              ]
+                            ],
+                          ),
+                        ],
+                      ]),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

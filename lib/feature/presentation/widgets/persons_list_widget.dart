@@ -16,9 +16,10 @@ class PersonsList extends StatelessWidget {
 
   void setupScrollController(BuildContext context) {
     scrollController.addListener(() {
+      //print(scrollController.position.activity.axisDirection);
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels != 0) {
-          //BlocProvider.of<PersonListCubit>(context).loadPerson();
+          //BlocProvider.of<ConvenienceFoodListCubit>(context).loadPerson();
           context.read<ConvenienceFoodListCubit>().loadPerson();
         }
       }
