@@ -121,8 +121,8 @@ class ConvenienceFoodListModel extends RecipeListEntity {
   factory ConvenienceFoodListModel.fromJson(Map<String, dynamic> json) {
     return ConvenienceFoodListModel(
       id: json['id'] as int,
-      name: json['name'] as String,
-      image: json['image'] as String,
+      name: json['name'].toString() as String,
+      image: json['image'].toString() as String,
       ageofIntroduce: json['ageofIntroduce'].toString() as String,
     );
   }
