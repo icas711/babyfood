@@ -10,6 +10,7 @@ url.dataurls
 .history
 .svn/
 migrate_working_dir/
+pubspec.lock
 
 # IntelliJ related
 *.iml
@@ -31,7 +32,7 @@ migrate_working_dir/
 **/android/**/GeneratedPluginRegistrant.java
 
 # iOS/XCode related
-**/ios/
+**/ios/*
 **/ios/**/*.mode1v3
 **/ios/**/*.mode2v3
 **/ios/**/*.moved-aside
