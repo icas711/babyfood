@@ -10,7 +10,7 @@ url.dataurls
 .history
 .svn/
 migrate_working_dir/
-pubspec.lock
+*.lock
 
 # IntelliJ related
 *.iml
@@ -30,7 +30,7 @@ pubspec.lock
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
-
+/ios/
 # iOS/XCode related
 **/ios/*
 **/ios/**/*.mode1v3
