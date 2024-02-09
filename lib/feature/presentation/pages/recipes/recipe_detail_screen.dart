@@ -31,7 +31,7 @@ class _RecipeDetailPageState extends State<RecipeDetailsScreen> {
   var adRequest = const AdRequest();
   var isLoading = false;
   var isBannerAlreadyCreated = false;
-  bool isSticky = false;
+  bool isSticky = true;
   late BannerAd banner;
 
    @override
@@ -48,159 +48,169 @@ class _RecipeDetailPageState extends State<RecipeDetailsScreen> {
       appBar: AppBar(
         title: Text('Рецепт "${widget.recipe.name}"'),
       ),
-      body: SingleChildScrollView(
-        //padding: const EdgeInsets.symmetric(horizontal: 0),
-        child: Wrap(
-          //direction: isScreenWide ? Axis.horizontal : Axis.vertical,
+      body: Column(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: isBannerAlreadyCreated ? AdWidget(bannerAd: banner) : null,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              //padding: const EdgeInsets.symmetric(horizontal: 0),
+              child: Wrap(
+                //direction: isScreenWide ? Axis.horizontal : Axis.vertical,
 
-          children: [
-            LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              return Container(
-                width: isScreenWide
-                    ? constraints.maxWidth /
-                        2 //MediaQuery.sizeOf(context).width / 2.4
-                    : constraints.maxWidth,
-                child: Column(
-                  children: [
-                    /*Container(
-                      child: Image.network(person.image, fit: BoxFit.fill),
-                    ),*/
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: double.infinity,
-                        child: AspectRatio(
-                          aspectRatio: 4 / 3,
-                          child: PersonCacheImage(
-                            //height: 160,
-                            imageUrl: widget.recipe.image,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        widget.recipe.name,
-                        style: const TextStyle(
-                          fontSize: 28,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      color: Colors.grey[200],
+                children: [
+                  LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                    return Container(
+                      width: isScreenWide
+                          ? constraints.maxWidth /
+                              2 //MediaQuery.sizeOf(context).width / 2.4
+                          : constraints.maxWidth,
                       child: Column(
-                        //mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          /*Container(
+                            child: Image.network(person.image, fit: BoxFit.fill),
+                          ),*/
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: PartBoldText(
-                              part1: 'Возраст: ',
-                              part2: '${widget.recipe.ageofIntroduce}+ месяцев',
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: double.infinity,
+                              child: AspectRatio(
+                                aspectRatio: 4 / 3,
+                                child: PersonCacheImage(
+                                  //height: 160,
+                                  imageUrl: widget.recipe.image,
+                                ),
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: PartBoldText(
-                              part1: 'Получится: ',
-                              part2: '${widget.recipe.yield}',
-                            ),
+                          const SizedBox(
+                            height: 6,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: PartBoldText(
-                              part1: 'Время приготовления: ',
-                              part2: '${widget.recipe.cookingTime}',
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              widget.recipe.name,
+                              style: const TextStyle(
+                                fontSize: 28,
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            color: Colors.grey[200],
+                            child: Column(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: PartBoldText(
+                                    part1: 'Возраст: ',
+                                    part2: '${widget.recipe.ageofIntroduce}+ месяцев',
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: PartBoldText(
+                                    part1: 'Получится: ',
+                                    part2: '${widget.recipe.yield}',
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: PartBoldText(
+                                    part1: 'Время приготовления: ',
+                                    part2: '${widget.recipe.cookingTime}',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          //if (isBannerAlreadyCreated) AdWidget(bannerAd: banner),
                         ],
                       ),
-                    ),
-                    if (isBannerAlreadyCreated) AdWidget(bannerAd: banner),
-                  ],
-                ),
-              );
-            }),
-            LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              return Container(
-                width: isScreenWide
-                    ? constraints.maxWidth /
-                        2 //MediaQuery.sizeOf(context).width / 2.4
-                    : constraints.maxWidth,
-                child: Column(children: [
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Html(
-                    data: """
-                  ${widget.recipe.recipe}""",
-                    onLinkTap: (url, _, __) {
-                      context.goNamed(
-                        'product-detail',
-                        pathParameters: {
-                          'foodId': url.toString(),
-                        },
-                      );
-                      debugPrint("Opening $url...");
-                    },
-                    extensions: [
-                      ImageExtension(builder: (extensionContext) {
-                        final element = extensionContext.element!.parent!
-                            .parent!.children.length; // as ImageElement;
-                        final element1 = extensionContext.attributes['src'];
-                        double childImageWidth = isScreenWide
-                            ? constraints.maxWidth / (element * 2.4)
-                            : constraints.maxWidth / (element * 1.2);
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      FullScreenImageViewer(element1!)),
+                    );
+                  }),
+                  LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                    return Container(
+                      width: isScreenWide
+                          ? constraints.maxWidth /
+                              2 //MediaQuery.sizeOf(context).width / 2.4
+                          : constraints.maxWidth,
+                      child: Column(children: [
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Html(
+                          data: """
+                        ${widget.recipe.recipe}""",
+                          onLinkTap: (url, _, __) {
+                            context.goNamed(
+                              'product-detail',
+                              pathParameters: {
+                                'foodId': url.toString(),
+                              },
                             );
+                            debugPrint("Opening $url...");
                           },
-                          child: HtmlCacheImage(
-                            imageUrl: element1!,
-                            width: childImageWidth,
-                            height: childImageWidth,
-                          ),
-                        );
-                      }),
-                      const TableHtmlExtension(),
-                    ],
-                    style: {
-                      "a": Style(textDecoration: TextDecoration.none),
-                      "body": Style(fontSize: FontSize(Routes.sizeFonts)),
-                      "tr": Style(),
-                      "th": Style(
-                        padding: HtmlPaddings.all(6.0),
-                        backgroundColor: Colors.grey,
-                      ),
-                      "td": Style(
-                        padding: HtmlPaddings.all(6.0),
-                        alignment: Alignment.topLeft,
-                      ),
-                    },
-                  ),
-                ]),
-              );
-            }),
-          ],
-        ),
+                          extensions: [
+                            ImageExtension(builder: (extensionContext) {
+                              final element = extensionContext.element!.parent!
+                                  .parent!.children.length; // as ImageElement;
+                              final element1 = extensionContext.attributes['src'];
+                              double childImageWidth = isScreenWide
+                                  ? constraints.maxWidth / (element * 2.4)
+                                  : constraints.maxWidth / (element * 1.2);
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            FullScreenImageViewer(element1!)),
+                                  );
+                                },
+                                child: HtmlCacheImage(
+                                  imageUrl: element1!,
+                                  width: childImageWidth,
+                                  height: childImageWidth,
+                                ),
+                              );
+                            }),
+                            const TableHtmlExtension(),
+                          ],
+                          style: {
+                            "a": Style(textDecoration: TextDecoration.none),
+                            "body": Style(fontSize: FontSize(Routes.sizeFonts)),
+                            "tr": Style(),
+                            "th": Style(
+                              padding: HtmlPaddings.all(6.0),
+                              backgroundColor: Colors.grey,
+                            ),
+                            "td": Style(
+                              padding: HtmlPaddings.all(6.0),
+                              alignment: Alignment.topLeft,
+                            ),
+                          },
+                        ),
+                      ]),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

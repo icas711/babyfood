@@ -9,11 +9,13 @@ abstract class RecipeLocalDataSource {
   Future<List<RecipeModel>> getLastRecipesFromCache();
   Future<void> recipesToCache(List<RecipeModel> recipes);
   void emptyRecipesInCache();
+  Future<List<RecipeModel>> getLastSearchRecipesFromCache();
+  Future<void> recipesSearchToCache(List<RecipeModel> recipes);
 }
 
 // ignore: constant_identifier_names
-const CACHED_RECIPES_LIST = 'CACHED_RECIPES_LIST';
-const DATE_CACHED_RECIPES_LIST = 'DATE_CACHED_RECIPES_LIST';
+const CACHED_RECIPES_LIST = 'babyrecipe';
+const CACHED_RECIPES_SEARCH_LIST = 'babyrecipe-search';
 
 class RecipeLocalDataSourceImpl implements RecipeLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -23,7 +25,7 @@ class RecipeLocalDataSourceImpl implements RecipeLocalDataSource {
   @override
   Future<List<RecipeModel>> getLastRecipesFromCache() {
     final jsonRecipesList = sharedPreferences.getStringList(
-        CACHED_RECIPES_LIST);
+        CACHED_RECIPES_LIST)??[];
     //if(jsonPersonsList!=null) {
     if (jsonRecipesList!.isNotEmpty) {
       print('Get Recipes from Cache: ${jsonRecipesList!.length}');
@@ -38,20 +40,47 @@ class RecipeLocalDataSourceImpl implements RecipeLocalDataSource {
   }
 
   @override
-  Future<List<String>> recipesToCache(List<RecipeModel> recipes) {
+  Future<List<String>> recipesToCache(List<RecipeModel> recipes) async {
     final List<String> jsonRecipesList =
     recipes.map((recipe) => json.encode(recipe.toJson())).toList();
-    int timestamp = DateTime.now().millisecondsSinceEpoch;
-    sharedPreferences.setStringList(CACHED_RECIPES_LIST, jsonRecipesList);
-    sharedPreferences.setInt(DATE_CACHED_RECIPES_LIST, timestamp);
+    List<String> cachedFoods = sharedPreferences.getStringList(CACHED_RECIPES_LIST) ?? [];
+    cachedFoods!.addAll(jsonRecipesList);
+    await sharedPreferences.setStringList(CACHED_RECIPES_LIST, cachedFoods);
+    //sharedPreferences.setStringList(CACHED_RECIPES_LIST, jsonRecipesList);
     print('Recipes to write Cache: ${jsonRecipesList.length}');
     return Future.value(jsonRecipesList);
   }
+
   @override
   void emptyRecipesInCache() {
     final List<String> jsonRecipesList = List<String>.empty();
     sharedPreferences.setStringList(CACHED_RECIPES_LIST, jsonRecipesList);
     print('Recipes to write Cache: ${jsonRecipesList.length}');
 
+  }
+
+  @override
+  Future<List<RecipeModel>> getLastSearchRecipesFromCache() {
+    final jsonRecipesList = sharedPreferences.getStringList(
+        CACHED_RECIPES_SEARCH_LIST)??[];
+    if (jsonRecipesList!.isNotEmpty) {
+      return Future.value(jsonRecipesList!
+          .map((person) => RecipeModel.fromJson(json.decode(person!)))
+          .toList());
+    } else {
+      print('Get Recipes from Cache:');
+      throw CacheException();
+    }
+
+  }
+
+  @override
+  Future<void> recipesSearchToCache(List<RecipeModel> recipes) {
+    final List<String> jsonRecipesList =
+    recipes.map((recipe) => json.encode(recipe.toJson())).toList();
+     sharedPreferences.setStringList(CACHED_RECIPES_SEARCH_LIST, jsonRecipesList);
+    //sharedPreferences.setStringList(CACHED_RECIPES_LIST, jsonRecipesList);
+    print('Recipes to write Cache: ${jsonRecipesList.length}');
+    return Future.value(jsonRecipesList);
   }
 }

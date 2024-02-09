@@ -1,24 +1,23 @@
 import 'dart:io';
 
 import 'package:babyfood/core/utils/constants.dart';
-import 'package:babyfood/feature/presentation/bloc/foodname_list_cubit/foodname_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/guide_list_cubit/guide_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_food_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/recipe_list_cubit/recipe_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_bloc.dart';
+import 'package:babyfood/initaial.dart';
 import 'package:babyfood/locator_service.dart';
 import 'package:babyfood/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-//import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:babyfood/locator_service.dart' as di;
 import 'package:yandex_mobileads/mobile_ads.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await initialApp();
   await di.init();
   // turn off the # in the URLs on the web
   //usePathUrlStrategy();
@@ -26,21 +25,19 @@ void main() async {
   runApp(
     MultiBlocProvider(providers: [
       BlocProvider<GuideListCubit>(
-          lazy: false, create: (context) => sl<GuideListCubit>()..loadGuide()),
-      BlocProvider<FoodNameListCubit>(
-          lazy: false,
-          create: (context) => sl<FoodNameListCubit>()..loadFoodName()),
+          //lazy: false,
+          create: (context) => sl<GuideListCubit>()),
       BlocProvider<ConvenienceFoodListCubit>(
-          lazy: false,
-          create: (context) => sl<ConvenienceFoodListCubit>()..loadPerson()),
+          //lazy: false,
+          create: (context) => sl<ConvenienceFoodListCubit>()),
       BlocProvider<PersonSearchBloc>(
           create: (context) => sl<PersonSearchBloc>()),
       BlocProvider<RecipeListCubit>(
-          lazy: false,
-          create: (context) => sl<RecipeListCubit>()..loadRecipe()),
+          //lazy: false,
+          create: (context) => sl<RecipeListCubit>()),
       BlocProvider<RecipeSearchBloc>(
           create: (context) => sl<RecipeSearchBloc>()),
-    ], child: const MyApp()),
+    ], child: MyApp()),
   );
 }
 
@@ -87,7 +84,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   ),
                 ),
               ),
-             /* inputDecorationTheme: const InputDecorationTheme(
+              /* inputDecorationTheme: const InputDecorationTheme(
                 fillColor: kPrimaryColor,
                 filled: true,
               ),*/

@@ -14,15 +14,15 @@ class GetAllRecipes extends UseCase<List<RecipeEntity>, PageRecipeParams> {
   @override
   Future<Either<Failure, List<RecipeEntity>>> call(
       PageRecipeParams params) async {
-    return await recipeRepository.getAllRecipes(params.page);
+    return await recipeRepository.getAllRecipes(params.start,params.end);
   }
 }
 
 class PageRecipeParams extends Equatable {
-  final int page;
-
-  const PageRecipeParams({required this.page});
+  final int start;
+  final int end;
+  PageRecipeParams({required this.start, required this.end});
 
   @override
-  List<Object> get props => [page];
+  List<Object> get props => [start,end];
 }

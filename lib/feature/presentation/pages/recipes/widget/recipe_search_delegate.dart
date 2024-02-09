@@ -1,8 +1,8 @@
 import 'package:babyfood/core/utils/constants.dart';
-import 'package:babyfood/feature/domain/entities/foodnames.dart';
+import 'package:babyfood/feature/domain/entities/convenience_food_entity.dart';
 import 'package:babyfood/feature/domain/entities/recipe_entity.dart';
-import 'package:babyfood/feature/presentation/bloc/foodname_list_cubit/foodname_list_cubit.dart';
-import 'package:babyfood/feature/presentation/bloc/foodname_list_cubit/foodname_list_state.dart';
+import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_food_list_cubit.dart';
+import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_food_list_state.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_event.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_state.dart';
@@ -43,13 +43,13 @@ class RecipeSearchDelegate extends SearchDelegate {
     List<String> matchQuery = [];
 
 
-    final List<FoodNameEntity> foodNames;
-    //BlocProvider.of<FoodNameListCubit>(context, listen: false).getAllFoods;
+    final List<ConvenienceFoodEntity> foodNames;
 
-    final state =  BlocProvider.of<FoodNameListCubit>(context, listen: false).state;
+    final state =
+    BlocProvider.of<ConvenienceFoodListCubit>(context, listen: false).state;
     int maxLengthOfQuery=0;
-    if (state is FoodNameLoaded) {
-      foodNames= state.foodsList;
+    if (state is FoodLoaded) {
+      foodNames = state.foodsList;
       for (int i = 0; i < foodNames.length; i++) {
         if(maxLengthOfQuery>9) break;
         String food = foodNames[i].name;

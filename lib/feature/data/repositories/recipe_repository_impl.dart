@@ -23,22 +23,73 @@ class RecipeRepositoryImpl implements RecipeRepository {
     localDataSource.emptyRecipesInCache();
   }
   @override
-  Future<Either<Failure, List<RecipeEntity>>> getAllRecipes(int page) async {
-    return await _getRecipes(() {
-      return remoteDataSource.getAllRecipes(page);
+  Future<Either<Failure, List<RecipeEntity>>> getAllRecipes(int start,int end) async {
+    return await _getRecipes(start, end, () {
+      return remoteDataSource.getAllRecipes(start,end);
     });
   }
 
 
   @override
   Future<Either<Failure, List<RecipeEntity>>> searchRecipe(String query) async {
-    return await _getRecipes(() {
+    return await _getSearchRecipes(() {
       return remoteDataSource.searchRecipe(query);
     });
   }
-
-  Future<Either<Failure, List<RecipeModel>>> _getRecipes(
+  Future<Either<Failure, List<RecipeModel>>> _getSearchRecipes(
       Future<List<RecipeModel>> Function() getRecipes) async {
+
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteRecipe = await getRecipes();
+        localDataSource.recipesSearchToCache(remoteRecipe);
+        return Right(remoteRecipe);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localRecipe = await localDataSource.getLastSearchRecipesFromCache();
+        return Right(localRecipe);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
+  }
+
+  Future<Either<Failure, List<RecipeModel>>> _getRecipes(int start,
+      int end,
+      Future<List<RecipeModel>> Function() getRecipes) async {
+    if (end > 0) {
+      if (await networkInfo.isConnected) {
+        try {
+          final remoteRecipe = await getRecipes();
+          localDataSource.recipesToCache(remoteRecipe);
+          //return Right(remoteFood);
+          try {
+            final localRecipe = await localDataSource.getLastRecipesFromCache();
+            return Right(localRecipe);
+          } on CacheException {
+            return Left(CacheFailure());
+          }
+        } on ServerException {
+          try {
+            final localRecipe = await localDataSource.getLastRecipesFromCache();
+            return Right(localRecipe);
+          } on CacheException {
+            return Left(CacheFailure());
+          }
+          return Left(ServerFailure());
+        }
+      }
+    } else {
+      try {
+        final localRecipe = await localDataSource.getLastRecipesFromCache();
+        return Right(localRecipe);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
     if (await networkInfo.isConnected) {
       try {
         final remoteRecipe = await getRecipes();

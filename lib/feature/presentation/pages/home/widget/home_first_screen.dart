@@ -4,6 +4,7 @@ import 'package:babyfood/core/utils/constants.dart';
 import 'package:babyfood/feature/presentation/pages/home/widget/home_list_widget.dart';
 import 'package:babyfood/feature/presentation/pages/home/widget/slider_carousel_home.dart';
 import 'package:babyfood/feature/presentation/pages/home/widget/title_with_underline.dart';
+import 'package:babyfood/core/utils/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rate_my_app/rate_my_app.dart';

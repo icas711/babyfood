@@ -12,7 +12,6 @@ abstract class GuideLocalDataSource {
   void emptyGuidesInCache();
 }
 
-// ignore: constant_identifier_names
 const CACHED_GUIDE_LIST = 'CACHED_GUIDE_LIST';
 const DATE_CACHED_GUIDE_LIST = 'DATE_CACHED_GUIDE_LIST';
 
@@ -24,7 +23,7 @@ class GuideLocalDataSourceImpl implements GuideLocalDataSource {
   @override
   Future<List<GuideModel>> getLastGuideFromCache() {
     final jsonGuidesList = sharedPreferences.getStringList(
-        CACHED_GUIDE_LIST);
+        CACHED_GUIDE_LIST)??[];
     if (jsonGuidesList!.isNotEmpty) {
       debugPrint('Get Guides from Cache: ${jsonGuidesList!.length}');
       return Future.value(jsonGuidesList!
@@ -55,6 +54,5 @@ class GuideLocalDataSourceImpl implements GuideLocalDataSource {
     print('Guides to write Cache: ${jsonPersonsList.length}');
 
   }
-
 
 }

@@ -1,5 +1,4 @@
 import 'package:babyfood/core/utils/constants.dart';
-import 'package:babyfood/feature/presentation/bloc/foodname_list_cubit/foodname_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/guide_list_cubit/guide_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_food_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/recipe_list_cubit/recipe_list_cubit.dart';
@@ -36,12 +35,10 @@ class _SettingScreenState extends State<SettingScreen> {
   void _setprefs() async {
     context.read<ConvenienceFoodListCubit>().clearProducts();
     context.read<RecipeListCubit>().clearProducts();
-    context.read<FoodNameListCubit>().clearProducts();
     context.read<GuideListCubit>().clearGuides();
-    await prefs.remove('CACHED_FOOD_LIST');
-    await prefs.remove('CACHED_FOOD_NAMES_LIST');
-    await prefs.remove('CACHED_RECIPE_LIST');
-    await prefs.remove('CACHED_GUIDE_LIST');
+    await prefs.remove('babyfood');
+    await prefs.remove('babyrecipe');
+    await prefs.remove('babyguides');
     //await DefaultCacheManager().emptyCache();
     DefaultCacheManager manager = DefaultCacheManager();
     manager.emptyCache();
@@ -55,7 +52,6 @@ class _SettingScreenState extends State<SettingScreen> {
       formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(dateCahedList);
     });
     context.read<ConvenienceFoodListCubit>().loadPerson();
-    context.read<FoodNameListCubit>().loadFoodName();
     context.read<RecipeListCubit>().loadRecipe();
     context.read<GuideListCubit>().loadGuide();
   }

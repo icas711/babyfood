@@ -1,5 +1,6 @@
 
 import 'package:babyfood/core/utils/constants.dart';
+import 'package:babyfood/core/utils/textstyle.dart';
 import 'package:babyfood/feature/domain/entities/convenience_food_entity.dart';
 import 'package:babyfood/feature/presentation/pages/foods/widget/recipe_list_widget.dart';
 import 'package:babyfood/feature/presentation/widgets/bolding_text.dart';
@@ -182,7 +183,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                           const SizedBox(
                             height: kDefaultPadding,
                           ),
-                          Padding(
+                          /*Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               child: LayoutBuilder(builder:
@@ -196,7 +197,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                                 );
                               }),
                             ),
-                          ),
+                          ),*/
                          // if (isBannerAlreadyCreated) AdWidget(bannerAd: banner),
                         ],
                       ),
@@ -213,37 +214,76 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                         const SizedBox(
                           height: 16,
                         ),
-                        if (selectedButtons['HowToOffer']!) ...[
+                        const Padding(
+                          padding: EdgeInsets.only(left: 6.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('Подача',style: ThemeText.welcome,
+                            ),
+                          ),
+                        ),
                           HtmlTextOnScreen(
                               data: widget.person.howToOffer,
                               width: constraints.maxWidth,
                               isScreenWide: isScreenWide),
-                        ],
-                        if (selectedButtons['Character']!) ...[
+
+                        const Padding(
+                          padding: EdgeInsets.only(left: 6.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('Характеристики',style: ThemeText.welcome,
+                            ),
+                          ),
+                        ),
                           HtmlTextOnScreen(
                               data: widget.person.characteristics,
                               width: constraints.maxWidth,
                               isScreenWide: isScreenWide),
-                        ],
-                        if (selectedButtons['HowToPrepare']!) ...[
+
+                        const Padding(
+                          padding: EdgeInsets.only(left: 6.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('Как приготовить',style: ThemeText.welcome,
+                            ),
+                          ),
+                        ),
                           HtmlTextOnScreen(
                               data: widget.person.howToPrepare,
                               width: constraints.maxWidth,
                               isScreenWide: isScreenWide),
-                        ],
-                        if (selectedButtons['DurabilityAndStorage']!) ...[
+                        const Padding(
+                          padding: EdgeInsets.only(left: 6.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('Сроки хранения',style: ThemeText.welcome,
+                            ),
+                          ),
+                        ),
                           HtmlTextOnScreen(
                               data: widget.person.durabilityAndStorage,
                               width: constraints.maxWidth,
                               isScreenWide: isScreenWide),
-                        ],
-                        if (selectedButtons['DidYouKnow']!) ...[
+                        const Padding(
+                          padding: EdgeInsets.only(left: 6.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('А вы знали?',style: ThemeText.welcome,
+                            ),
+                          ),
+                        ),
                           HtmlTextOnScreen(
                               data: widget.person.didYouKnow,
                               width: constraints.maxWidth,
                               isScreenWide: isScreenWide),
-                        ],
-                        if (selectedButtons['Recipes']!) ...[
+                        const Padding(
+                          padding: EdgeInsets.only(left: 6.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('Рецепты',style: ThemeText.welcome,
+                            ),
+                          ),
+                        ),
                           Column(
                             children: [
                               const SizedBox(
@@ -266,7 +306,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                               ]
                             ],
                           ),
-                        ],
+
                       ]),
                     );
                   }),

@@ -18,7 +18,6 @@ class GuideListCubit extends Cubit<GuideState> {
     emit(GuideEmpty());
   }
   void loadGuide() async {
-    debugPrint('FoodName State is: $state');
     if (state is GuideLoading) return;
     final currentState = state;
 

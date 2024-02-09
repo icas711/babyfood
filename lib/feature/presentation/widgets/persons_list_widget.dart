@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:babyfood/core/utils/constants.dart';
 import 'package:babyfood/feature/domain/entities/convenience_food_entity.dart';
 import 'package:flutter/material.dart';
@@ -9,27 +7,10 @@ import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_f
 import 'package:babyfood/feature/presentation/widgets/food_card_widget.dart';
 
 class PersonsList extends StatelessWidget {
-  final scrollController = ScrollController();
-  final int page = -1;
-
   PersonsList({Key? key}) : super(key: key);
-
-  void setupScrollController(BuildContext context) {
-    scrollController.addListener(() {
-      //print(scrollController.position.activity.axisDirection);
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          //BlocProvider.of<ConvenienceFoodListCubit>(context).loadPerson();
-          context.read<ConvenienceFoodListCubit>().loadPerson();
-        }
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    setupScrollController(context);
-
     return BlocBuilder<ConvenienceFoodListCubit, ConvenienceFoodState>(
         builder: (context, state) {
       List<ConvenienceFoodEntity> foods = [];
@@ -50,23 +31,13 @@ class PersonsList extends StatelessWidget {
       }
       Size size = MediaQuery.of(context).size;
       return GridView.builder(
-        itemCount: foods.length + (isLoading ? 1 : 0),
-        controller: scrollController,
+        itemCount: foods.length, // + (isLoading ? 1 : 0),
 
         itemBuilder: (context, index) {
-          if (index < foods.length) {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-              child: PersonCard(food: foods[index], isMini: true),
-            );
-          } else {
-            Timer(const Duration(milliseconds: 30), () {
-              scrollController
-                  .jumpTo(scrollController.position.maxScrollExtent);
-            });
-            return _loadingIndicator();
-          }
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+            child: PersonCard(food: foods[index], isMini: true),
+          );
         },
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: MediaQuery.of(context).size.width > Routes.smallScreen
@@ -77,7 +48,6 @@ class PersonsList extends StatelessWidget {
                   : 3)
               : 2,
           mainAxisSpacing: 1,
-          //mainAxisExtent: 300,
           crossAxisSpacing: 1,
           childAspectRatio: 9 / 9,
         ),

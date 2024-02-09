@@ -16,11 +16,13 @@ import 'package:babyfood/feature/presentation/pages/recipes/recipe_detail_screen
 import 'package:babyfood/feature/presentation/pages/recipes/recipes_screen.dart';
 import 'package:babyfood/feature/presentation/pages/settings/setting_screen.dart';
 import 'package:babyfood/main.dart';
+import 'package:babyfood/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final rootNavigatorKey = GlobalKey<NavigatorState>();
+
 
 final _shellNavigatorHomeKey =
     GlobalKey<NavigatorState>(debugLabel: 'shellHome');
@@ -29,10 +31,16 @@ final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
 final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
 
 final goRouter = GoRouter(
-  initialLocation: '/home',
-  navigatorKey: _rootNavigatorKey,
+  //initialLocation: '/home',
+  navigatorKey: rootNavigatorKey,
   debugLogDiagnostics: true,
+  initialLocation: '/',
+
   routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => SplashScreen(),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return ScaffoldWithNestedNavigation(navigationShell: navigationShell);
@@ -88,6 +96,7 @@ final goRouter = GoRouter(
                   builder: (context, state) {
                     final personId =
                         int.tryParse(state.pathParameters['foodId']!);
+
                     final _tyuw =
                         BlocProvider.of<ConvenienceFoodListCubit>(context).state;
                     final foodlist = (_tyuw as FoodLoaded).foodsList;

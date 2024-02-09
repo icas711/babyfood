@@ -31,24 +31,17 @@ dependencies:
   flutter_cache_manager: ^3.3.1
   intl: ^0.19.0
   rate_my_app: ^2.0.0
-  flutter_native_splash: ^2.3.9
+  flutter_native_splash: ^2.3.10
   json_annotation: ^4.8.1
   zoom_tap_animation: ^1.1.0
   carousel_slider: ^4.2.1
   yandex_mobileads: ^6.2.0
   url_launcher: ^6.2.4
   mysql1: ^0.20.0
+  sticky_headers: ^0.3.0+2
+  flutter_spinkit: ^5.2.0
 
-flutter_native_splash:
-  color: "#3A4F62"
-  background_image: "assets/images/launchframe.png"
-  android: true
-  ios: true
-  android_gravity: fill
-  android_12:
-    color: "#3A4F62"
-    background_image_android: "assets/images/launchframe.png"
-    android_gravity: center
+
 
 dev_dependencies:
   flutter_test:

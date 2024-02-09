@@ -1,15 +1,19 @@
 
 import 'package:babyfood/feature/data/models/convenience_food_model.dart';
+import 'package:babyfood/splash.dart';
+import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:mysql1/mysql1.dart';
 
 import 'url.dataurls';
 
 abstract class ConvenienceFoodRemoteDataSource {
-  Future<List<ConvenienceFoodModel>> getAllFoods(int page);
+  Future<List<ConvenienceFoodModel>> getAllFoods(int start,int end);
 
   Future<List<ConvenienceFoodModel>> searchFood(String query);
+
 }
+
 
 class ConvenienceFoodRemoteDataSourceImpl
     implements ConvenienceFoodRemoteDataSource {
@@ -18,27 +22,27 @@ class ConvenienceFoodRemoteDataSourceImpl
   ConvenienceFoodRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<List<ConvenienceFoodModel>> getAllFoods(int page) async {
+  Future<List<ConvenienceFoodModel>> getAllFoods(int start,int end) async {
+
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: hostSql,
-        port: portSql,
-        user: userSql,
-        db: dbSql,
-        password: passwordSql,
+      host: hostSql,
+      port: portSql,
+      user: userSql,
+      db: dbSql,
+      password: passwordSql,
     )
     );
-    var results = await conn.query('select * from babyfood ORDER BY name ASC LIMIT ${page*20-20}, 20');
+
+    print('select * from babyfood LIMIT $start, $end');
+    var results = await conn.query('select * from babyfood LIMIT $start, $end');
     List<ConvenienceFoodModel> m1 = [];
     for (var row in results) {
       var results2 = await conn.query(
-          "SELECT babyrecipe.name,babyrecipe.id,babyrecipe.image,babyrecipe.ageofIntroduce "
-          "FROM babyrecipe JOIN babycrossdata ON babyrecipe.id = babycrossdata.recipe_id "
-          "WHERE babycrossdata.food_id = ? ORDER BY babyrecipe.name REGEXP '^[А-яа-я]' DESC, babyrecipe.name REGEXP '^[A-za-z]' DESC, babyrecipe.name",
+          "SELECT babyrecipe.id,babyrecipe.name,babyrecipe.image,babyrecipe.ageofIntroduce "
+              "FROM babyrecipe JOIN babycrossdata ON babyrecipe.id = babycrossdata.recipe_id "
+              "WHERE babycrossdata.food_id = ? ORDER BY babyrecipe.name REGEXP '^[А-яа-я]' DESC, babyrecipe.name REGEXP '^[A-za-z]' DESC, babyrecipe.name",
           [row[0]]);
-      List<ConvenienceFoodListModel> m2 = [];
-      for (var row2 in results2) {
-        m2.add(ConvenienceFoodListModel.fromSql(row2));
-      }
+      List<ConvenienceFoodListModel> m2 = List.generate(results2.length, (i) => ConvenienceFoodListModel.fromSql(results2.toList()[i]));
       m1.add(ConvenienceFoodModel.fromSql(row, m2));
     }
     // Finally, close the connection
@@ -57,19 +61,15 @@ class ConvenienceFoodRemoteDataSourceImpl
 
     var results = await conn
         .query('SELECT * FROM babyfood WHERE name like lower(?)', ['%$query%']);
-
     List<ConvenienceFoodModel> m1 = [];
     for (var row in results) {
       var results2 = await conn.query(
           "SELECT babyrecipe.name,babyrecipe.id,babyrecipe.image,babyrecipe.ageofIntroduce FROM babyrecipe "
-          "JOIN babycrossdata ON babyrecipe.id = babycrossdata.recipe_id "
-          "WHERE babycrossdata.food_id = ? "
-          "ORDER BY babyrecipe.name REGEXP '^[А-яа-я]' DESC, babyrecipe.name REGEXP '^[A-za-z]' DESC, babyrecipe.name",
+              "JOIN babycrossdata ON babyrecipe.id = babycrossdata.recipe_id "
+              "WHERE babycrossdata.food_id = ? "
+              "ORDER BY babyrecipe.name REGEXP '^[А-яа-я]' DESC, babyrecipe.name REGEXP '^[A-za-z]' DESC, babyrecipe.name",
           [row['id']]);
-      List<ConvenienceFoodListModel> m2 = [];
-      for (var row2 in results2) {
-        m2.add(ConvenienceFoodListModel.fromSql(row2));
-      }
+      List<ConvenienceFoodListModel> m2 = List.generate(results2.length, (i) => ConvenienceFoodListModel.fromSql(results2.toList()[i]));
       m1.add(ConvenienceFoodModel.fromSql(row, m2));
     }
     // Finally, close the connection

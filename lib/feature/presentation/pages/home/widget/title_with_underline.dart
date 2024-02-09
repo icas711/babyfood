@@ -1,4 +1,5 @@
 import 'package:babyfood/core/utils/constants.dart';
+import 'package:babyfood/core/utils/textstyle.dart';
 import 'package:flutter/material.dart';
 class TitleWithMoreBtn extends StatelessWidget {
   const TitleWithMoreBtn({
@@ -19,7 +20,7 @@ class TitleWithMoreBtn extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(fontSize: 20, fontWeight: kFontWeight),
+              style: ThemeText.sliverText,
               //overflow: TextOverflow.ellipsis,
               //maxLines: 2,
             ),

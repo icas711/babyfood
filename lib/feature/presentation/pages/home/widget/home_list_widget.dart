@@ -14,19 +14,9 @@ class GuideList extends StatelessWidget {
 
   GuideList({Key? key}) : super(key: key);
 
-  void setupScrollController(BuildContext context) {
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          context.read<GuideListCubit>().loadGuide();
-        }
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    //setupScrollController(context);
 
     return BlocBuilder<GuideListCubit, GuideState>(builder: (context, state) {
       List<GuideEntity> guides = [];

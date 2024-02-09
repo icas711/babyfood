@@ -1,4 +1,5 @@
 import 'package:babyfood/feature/domain/entities/convenience_food_entity.dart';
+import 'package:mysql1/mysql1.dart';
 
 class ConvenienceFoodModel extends ConvenienceFoodEntity {
   const ConvenienceFoodModel({
@@ -118,6 +119,7 @@ class ConvenienceFoodListModel extends RecipeListEntity {
           ageofIntroduce: ageofIntroduce,
         );
 
+
   factory ConvenienceFoodListModel.fromJson(Map<String, dynamic> json) {
     return ConvenienceFoodListModel(
       id: json['id'] as int,
@@ -127,11 +129,11 @@ class ConvenienceFoodListModel extends RecipeListEntity {
     );
   }
 
-  factory ConvenienceFoodListModel.fromSql(var sql) {
+  factory ConvenienceFoodListModel.fromSql(ResultRow sql) {
     return ConvenienceFoodListModel(
       id: sql['id'] as int,
-      name: sql['name'] as String,
-      image: sql['image'] as String,
+      name: sql['name'].toString() as String,
+      image: sql['image'].toString() as String,
       ageofIntroduce: sql['ageofIntroduce'].toString() as String,
     );
   }
@@ -140,6 +142,8 @@ class ConvenienceFoodListModel extends RecipeListEntity {
     return {
       'id': id,
       'name': name,
+      'image':image,
+      'ageofIntroduce':ageofIntroduce
     };
   }
 }
