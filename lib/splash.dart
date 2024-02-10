@@ -22,82 +22,88 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   String loadingString = 'Скачиваем новые продукты...';
-@override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    BlocProvider.of<ConvenienceFoodListCubit>(context,listen: true).loadPerson();
-    BlocProvider.of<RecipeListCubit>(context,listen: true).loadRecipe();
-    BlocProvider.of<GuideListCubit>(context,listen: true).loadGuide();
-  }
+
   @override
   Widget build(BuildContext context) {
-      Future.delayed(const Duration(seconds: 15)).then((value) =>
-          GoRouter.of(rootNavigatorKey.currentContext!).go('/home')); // !!!
-     return BlocBuilder<ConvenienceFoodListCubit, ConvenienceFoodState>(
-        builder: (context, state) {
-          final stateRecipe =
-          BlocProvider.of<RecipeListCubit>(context, listen: false).state;
+    Future.delayed(const Duration(seconds: 7)).then((value) {
+      if(context.mounted) {
+        goRouter.go('/home');
+      }
+    }); // !!!
 
-          final stateGuide =
-              BlocProvider.of<GuideListCubit>(context, listen: false).state;
+    final state2 =
+        BlocProvider.of<ConvenienceFoodListCubit>(context, listen: true).state;
+    final stateRecipe =
+        BlocProvider.of<RecipeListCubit>(context, listen: true).state;
 
-          /*      if (state is FoodLoading) {
+    final stateGuide =
+        BlocProvider.of<GuideListCubit>(context, listen: true).state;
+
+    /*      if (state is FoodLoading) {
             //setState(() {
               loadingString = 'Скачиваем новые продукты...';
             //});
           } else*/
-          if (state is FoodLoaded) {
-            loadingString = 'Генерируем вкусные рецепты...';
-          }
-            if (stateRecipe is RecipeLoaded) {
-              loadingString = 'Создаем гайды и методички...';
-              //GoRouter.of(rootNavigatorKey.currentContext!).go('/home');
-            }
-            if(stateGuide is GuideLoaded && state is FoodLoaded && stateRecipe is RecipeLoaded){
-              GoRouter.of(rootNavigatorKey.currentContext!).go('/home');
-            }
-          return Scaffold(
-              backgroundColor: kPrimaryColor,
-
-              body:
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    if (state2 is FoodLoaded) {
+      loadingString = 'Генерируем вкусные рецепты...';
+    }
+    if (stateRecipe is RecipeLoaded) {
+      loadingString = 'Создаем гайды и методички...';
+      //GoRouter.of(rootNavigatorKey.currentContext!).go('/home');
+    }
+    if (stateGuide is GuideLoaded &&
+        state2 is FoodLoaded &&
+        stateRecipe is RecipeLoaded) {
+      if(context.mounted) {
+        goRouter.go('/home');
+      }
+    }
+    return Stack(
+      children: [
+    Image.asset(
+    "assets/images/launchframe.png",
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      fit: BoxFit.cover,
+    ),
+       Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(),
+                Column(
                   children: [
-                    Container(),
-                    Column(
-                      children: [
-                        const Text(
-                          'BabyFood\n'
-                              'Первый прикорм',
-                          style: ThemeText.splashHead,
-                          textAlign: TextAlign.center,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: SpinKitChasingDots(
-                            color: Colors.white,
-                            size: 50,
-                          ),
-                        ),
-                        Text(
-                          loadingString,
-                          style: ThemeText.progressFooter,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
                     const Text(
-                      'powered by Babylabpro\n',
-                      textDirection: TextDirection.ltr,
-                      style: ThemeText.ercCard,
-                    )
+                      'BabyFood\n'
+                      'Первый прикорм',
+                      style: ThemeText.splashHead,
+                      textAlign: TextAlign.center,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: SpinKitChasingDots(
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                    ),
+                    Text(
+                      loadingString,
+                      style: ThemeText.progressFooter,
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
-              )
-          );
-        }
+                const Text(
+                  'powered by Babylabpro\n',
+                  textDirection: TextDirection.ltr,
+                  style: ThemeText.ercCard,
+                )
+              ],
+            ),
+          )),
+              ]
     );
   }
 }

@@ -1,0 +1,19 @@
+flutter_native_splash:
+  color: "#0c9869"
+  #image: none
+  background_image: assets/images/launchframe.png
+  #branding: assets/images/launchframe.png
+  color_dark: "#0c9869"
+  #image_dark: assets/logo-development.png
+  background_image_dark: assets/images/launchframe.png
+  #branding_dark: assets/images/launchframe.png
+
+  android_12:
+    #image: assets/images/launchframe.png
+    background_image: assets/images/launchframe.png
+    #icon_background_color: "#0c9869"
+    #image_dark: assets/images/launchframe.png
+    #icon_background_color_dark: "#0c9869"
+    background_image_dark: assets/images/launchframe.png
+
+  web: false
