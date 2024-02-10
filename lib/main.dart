@@ -25,16 +25,16 @@ void main() async {
   runApp(
     MultiBlocProvider(providers: [
       BlocProvider<GuideListCubit>(
-          //lazy: false,
-          create: (context) => sl<GuideListCubit>()),
+          lazy: false,
+          create: (context) => sl<GuideListCubit>()..loadGuide()),
       BlocProvider<ConvenienceFoodListCubit>(
-          //lazy: false,
-          create: (context) => sl<ConvenienceFoodListCubit>()),
+          lazy: false,
+          create: (context) => sl<ConvenienceFoodListCubit>()..loadPerson()),
       BlocProvider<PersonSearchBloc>(
           create: (context) => sl<PersonSearchBloc>()),
       BlocProvider<RecipeListCubit>(
-          //lazy: false,
-          create: (context) => sl<RecipeListCubit>()),
+          lazy: false,
+          create: (context) => sl<RecipeListCubit>()..loadRecipe()),
       BlocProvider<RecipeSearchBloc>(
           create: (context) => sl<RecipeSearchBloc>()),
     ], child: MyApp()),
