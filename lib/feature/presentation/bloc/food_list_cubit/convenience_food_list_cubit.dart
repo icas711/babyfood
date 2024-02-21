@@ -23,9 +23,6 @@ class ConvenienceFoodListCubit extends Cubit<ConvenienceFoodState> {
   }
 
   void loadPerson() async {
-    // debugPrint('State is: $state');
-    print('Скачиваем новые рецепты...');
-    //BlocProvider.of<LoadingStringCubit>(context).updateState('newState');
     if (state is FoodLoading) return;
     final currentState = state;
     final prefs = await SharedPreferences.getInstance();

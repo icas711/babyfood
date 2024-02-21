@@ -21,12 +21,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  String loadingString = 'Скачиваем новые продукты...';
-
+  String loadingString = 'Создаем гайды и методички...';
+bool isRouted=false;
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 7)).then((value) {
-      if(context.mounted) {
+    Future.delayed(const Duration(seconds: 11)).then((value) {
+      if(context.mounted && !isRouted) {
+        isRouted=true;
         goRouter.go('/home');
       }
     }); // !!!
@@ -48,13 +49,14 @@ class _SplashScreenState extends State<SplashScreen> {
       loadingString = 'Генерируем вкусные рецепты...';
     }
     if (stateRecipe is RecipeLoaded) {
-      loadingString = 'Создаем гайды и методички...';
+      loadingString = 'Обновляем данные...';
       //GoRouter.of(rootNavigatorKey.currentContext!).go('/home');
     }
     if (stateGuide is GuideLoaded &&
         state2 is FoodLoaded &&
         stateRecipe is RecipeLoaded) {
-      if(context.mounted) {
+      if(context.mounted && !isRouted) {
+        isRouted=true;
         goRouter.go('/home');
       }
     }
