@@ -44,6 +44,7 @@ class RecipesList extends StatelessWidget {
       } else if (state is RecipeLoading) {
         recipes = state.oldRecipesList;
         isLoading = true;
+        return _loadingIndicator();
       } else if (state is RecipeLoaded) {
         recipes = state.recipesList;
       } else if (state is RecipeError) {

@@ -21,6 +21,7 @@ class PersonsList extends StatelessWidget {
       } else if (state is FoodLoading) {
         foods = state.oldFoodsList;
         isLoading = true;
+        return _loadingIndicator();
       } else if (state is FoodLoaded) {
         foods = state.foodsList;
       } else if (state is FoodError) {

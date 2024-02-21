@@ -27,8 +27,12 @@ bool isRouted=false;
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 11)).then((value) {
       if(context.mounted && !isRouted) {
-        isRouted=true;
-        goRouter.go('/home');
+        WidgetsBinding.instance.addPostFrameCallback(
+                (_) {
+              isRouted=true;
+              goRouter.go('/home');
+            });
+        //goRouter.go('/home');
       }
     }); // !!!
 
@@ -56,8 +60,15 @@ bool isRouted=false;
         state2 is FoodLoaded &&
         stateRecipe is RecipeLoaded) {
       if(context.mounted && !isRouted) {
-        isRouted=true;
-        goRouter.go('/home');
+        WidgetsBinding.instance.addPostFrameCallback(
+            (_) {
+              //goRouter.pushReplacement('/home');
+              isRouted=true;
+              goRouter.go('/home');
+            });
+
+        //goRouter.go('/home');
+
       }
     }
     return Stack(
