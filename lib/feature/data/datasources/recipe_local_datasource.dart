@@ -28,12 +28,10 @@ class RecipeLocalDataSourceImpl implements RecipeLocalDataSource {
         CACHED_RECIPES_LIST)??[];
     //if(jsonPersonsList!=null) {
     if (jsonRecipesList!.isNotEmpty) {
-      print('Get Recipes from Cache: ${jsonRecipesList!.length}');
       return Future.value(jsonRecipesList!
           .map((person) => RecipeModel.fromJson(json.decode(person!)))
           .toList());
     } else {
-      print('Get Recipes from Cache:');
       throw CacheException();
     }
 
@@ -46,8 +44,6 @@ class RecipeLocalDataSourceImpl implements RecipeLocalDataSource {
     List<String> cachedFoods = sharedPreferences.getStringList(CACHED_RECIPES_LIST) ?? [];
     cachedFoods!.addAll(jsonRecipesList);
     await sharedPreferences.setStringList(CACHED_RECIPES_LIST, cachedFoods);
-    //sharedPreferences.setStringList(CACHED_RECIPES_LIST, jsonRecipesList);
-    print('Recipes to write Cache: ${jsonRecipesList.length}');
     return Future.value(jsonRecipesList);
   }
 
@@ -55,7 +51,6 @@ class RecipeLocalDataSourceImpl implements RecipeLocalDataSource {
   void emptyRecipesInCache() {
     final List<String> jsonRecipesList = List<String>.empty();
     sharedPreferences.setStringList(CACHED_RECIPES_LIST, jsonRecipesList);
-    print('Recipes to write Cache: ${jsonRecipesList.length}');
 
   }
 
@@ -68,7 +63,6 @@ class RecipeLocalDataSourceImpl implements RecipeLocalDataSource {
           .map((person) => RecipeModel.fromJson(json.decode(person!)))
           .toList());
     } else {
-      print('Get Recipes from Cache:');
       throw CacheException();
     }
 
@@ -79,8 +73,6 @@ class RecipeLocalDataSourceImpl implements RecipeLocalDataSource {
     final List<String> jsonRecipesList =
     recipes.map((recipe) => json.encode(recipe.toJson())).toList();
      sharedPreferences.setStringList(CACHED_RECIPES_SEARCH_LIST, jsonRecipesList);
-    //sharedPreferences.setStringList(CACHED_RECIPES_LIST, jsonRecipesList);
-    print('Recipes to write Cache: ${jsonRecipesList.length}');
     return Future.value(jsonRecipesList);
   }
 }

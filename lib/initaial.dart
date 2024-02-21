@@ -27,8 +27,6 @@ class GetCountSql{
     counter = results.first.first;
     final List<String>? babyCache = prefs.getStringList(tableName);
     int counterFromCache = babyCache?.length ?? 0;
-print(counterFromCache);
-print(counter-counterFromCache);
     await conn.close();
     return [counterFromCache,counter-counterFromCache];
   }

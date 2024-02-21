@@ -25,12 +25,12 @@ class GuideLocalDataSourceImpl implements GuideLocalDataSource {
     final jsonGuidesList = sharedPreferences.getStringList(
         CACHED_GUIDE_LIST)??[];
     if (jsonGuidesList!.isNotEmpty) {
-      debugPrint('Get Guides from Cache: ${jsonGuidesList!.length}');
+      //debugPrint('Get Guides from Cache: ${jsonGuidesList!.length}');
       return Future.value(jsonGuidesList!
           .map((guide) => GuideModel.fromJson(json.decode(guide!)))
           .toList());
     } else {
-      debugPrint('Get Guides from Cache:');
+      //debugPrint('Get Guides from Cache:');
 
       throw CacheException();
     }
@@ -44,14 +44,12 @@ class GuideLocalDataSourceImpl implements GuideLocalDataSource {
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     sharedPreferences.setStringList(CACHED_GUIDE_LIST, jsonGuidesList);
     sharedPreferences.setInt(DATE_CACHED_GUIDE_LIST, timestamp);
-    print('Guides to write Cache: ${jsonGuidesList.length}');
     return Future.value(jsonGuidesList);
   }
   @override
   void emptyGuidesInCache() {
     final List<String> jsonPersonsList = List<String>.empty();
     sharedPreferences.setStringList(CACHED_GUIDE_LIST, jsonPersonsList);
-    print('Guides to write Cache: ${jsonPersonsList.length}');
 
   }
 

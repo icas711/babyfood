@@ -1,4 +1,3 @@
-
 import 'package:babyfood/core/utils/constants.dart';
 import 'package:babyfood/core/utils/textstyle.dart';
 import 'package:babyfood/feature/domain/entities/convenience_food_entity.dart';
@@ -11,6 +10,7 @@ import 'package:babyfood/feature/presentation/widgets/selectable_button.dart';
 import 'package:babyfood/feature/presentation/widgets/star_rating.dart';
 import 'package:babyfood/feature/presentation/widgets/text_on_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -24,7 +24,6 @@ class ProductDetailsScreen extends StatefulWidget {
 
   @override
   State<ProductDetailsScreen> createState() => _PersonDetailPageState();
-
 }
 
 class _PersonDetailPageState extends State<ProductDetailsScreen> {
@@ -53,13 +52,16 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
     'DidYouKnow': 'А вы знали?',
     'Recipes': 'Рецепты',
   };
-@override
+
+  String checkNum(int x){
+    return x<10?"0${x}":x.toString();
+  }
+  @override
   void initState() {
     super.initState();
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => _loadBanner());
-
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadBanner());
   }
+
   @override
   Widget build(BuildContext context) {
     bool isScreenWide = MediaQuery.sizeOf(context).width >= Routes.mediumScreen;
@@ -80,8 +82,8 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                 //direction: isScreenWide ? Axis.horizontal : Axis.vertical,
 
                 children: [
-                  LayoutBuilder(
-                      builder: (BuildContext context, BoxConstraints constraints) {
+                  LayoutBuilder(builder:
+                      (BuildContext context, BoxConstraints constraints) {
                     return Container(
                       width: isScreenWide
                           ? constraints.maxWidth /
@@ -109,7 +111,8 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                             height: 6,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               widget.person.name,
                               style: const TextStyle(
@@ -131,18 +134,21 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                               children: [
                                 PartBoldText(
                                   part1: 'Начинать вводить в рацион: с ',
-                                  part2: '${widget.person.ageofIntroduce} месяцев',
+                                  part2:
+                                      '${widget.person.ageofIntroduce} месяцев',
                                 ),
                                 SizedBox(
                                   width: double.infinity,
                                   child: Wrap(
                                       alignment: WrapAlignment.center,
-                                      crossAxisAlignment: WrapCrossAlignment.center,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.center,
                                       //mainAxisAlignment: MainAxisAlignment.center,
                                       //direction: isScreenWide ? Axis.horizontal : Axis.vertical,
                                       children: [
                                         PartBoldText(
-                                            part1: 'Нутритивная польза:', part2: ''),
+                                            part1: 'Нутритивная польза:',
+                                            part2: ''),
                                         Container(
                                           height: 20,
                                           width: 120,
@@ -159,22 +165,22 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                                 ),
                                 PartBoldText(
                                   part1: 'Общий аллерген: ',
-                                  part2: widget.person.commonAllergen == true
+                                  part2: widget.person.commonAllergen == 1
                                       ? 'Да'
                                       : 'Нет',
                                 ),
-                                if (widget.person.poopFriendly)
+                                if (widget.person.poopFriendly == 1)
                                   PartBoldText(
                                     part1: 'Легкий стул: ',
-                                    part2: widget.person.poopFriendly == true
+                                    part2: widget.person.poopFriendly == 1
                                         ? 'Да'
                                         : 'Нет',
                                   ),
-                                if (widget.person.highChockinHazard)
+                                if (widget.person.highChockinHazard == 1)
                                   PartBoldText(
                                     part1: 'Опасность удушья: ',
-                                    part2: widget.person.highChockinHazard == true
-                                        ? 'Да'
+                                    part2: widget.person.highChockinHazard == 1
+                                        ? 'Да ⚠️'
                                         : 'Нет',
                                   ),
                               ],
@@ -198,13 +204,13 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                               }),
                             ),
                           ),*/
-                         // if (isBannerAlreadyCreated) AdWidget(bannerAd: banner),
+                          // if (isBannerAlreadyCreated) AdWidget(bannerAd: banner),
                         ],
                       ),
                     );
                   }),
-                  LayoutBuilder(
-                      builder: (BuildContext context, BoxConstraints constraints) {
+                  LayoutBuilder(builder:
+                      (BuildContext context, BoxConstraints constraints) {
                     return Container(
                       width: isScreenWide
                           ? constraints.maxWidth /
@@ -218,95 +224,121 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                           padding: EdgeInsets.only(left: 6.0),
                           child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('Подача',style: ThemeText.welcome,
+                            child: Text(
+                              'Подача',
+                              style: ThemeText.welcome,
                             ),
                           ),
                         ),
-                          HtmlTextOnScreen(
-                              data: widget.person.howToOffer,
-                              width: constraints.maxWidth,
-                              isScreenWide: isScreenWide),
-
-                        const Padding(
-                          padding: EdgeInsets.only(left: 6.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Характеристики',style: ThemeText.welcome,
+                        HtmlTextOnScreen(
+                            data: widget.person.howToOffer,
+                            width: constraints.maxWidth,
+                            isScreenWide: isScreenWide),
+                        const Column(
+                          children: [
+                            Divider(),
+                            Padding(
+                              padding: EdgeInsets.only(left: 6.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Характеристики',
+                                  style: ThemeText.welcome,
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                          HtmlTextOnScreen(
-                              data: widget.person.characteristics,
-                              width: constraints.maxWidth,
-                              isScreenWide: isScreenWide),
-
-                        const Padding(
-                          padding: EdgeInsets.only(left: 6.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Как приготовить',style: ThemeText.welcome,
-                            ),
-                          ),
-                        ),
-                          HtmlTextOnScreen(
-                              data: widget.person.howToPrepare,
-                              width: constraints.maxWidth,
-                              isScreenWide: isScreenWide),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 6.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Сроки хранения',style: ThemeText.welcome,
-                            ),
-                          ),
-                        ),
-                          HtmlTextOnScreen(
-                              data: widget.person.durabilityAndStorage,
-                              width: constraints.maxWidth,
-                              isScreenWide: isScreenWide),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 6.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('А вы знали?',style: ThemeText.welcome,
-                            ),
-                          ),
-                        ),
-                          HtmlTextOnScreen(
-                              data: widget.person.didYouKnow,
-                              width: constraints.maxWidth,
-                              isScreenWide: isScreenWide),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 6.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Рецепты',style: ThemeText.welcome,
-                            ),
-                          ),
-                        ),
-                          Column(
+                        HtmlTextOnScreen(
+                            data: widget.person.characteristics,
+                            width: constraints.maxWidth,
+                            isScreenWide: isScreenWide),
+                        if (widget.person.howToPrepare.length > 3)
+                          const Column(
                             children: [
-                              const SizedBox(
-                                height: 16.0,
-                              ),
-                              const Text(
-                                'Рецепты:',
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 16.0,
-                              ),
-                              if (widget.person.recipes.length != 0) ...[
-                                RecipeList(
-                                  recipe: widget.person.recipes,
+                              Divider(),
+                              Padding(
+                                padding: EdgeInsets.only(left: 6.0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Как приготовить',
+                                    style: ThemeText.welcome,
+                                  ),
                                 ),
-                                const SizedBox(
-                                  height: 16.0,
-                                ),
-                              ]
+                              ),
                             ],
                           ),
-
+                        HtmlTextOnScreen(
+                            data: widget.person.howToPrepare,
+                            width: constraints.maxWidth,
+                            isScreenWide: isScreenWide),
+                        if (widget.person.durabilityAndStorage.length > 2)
+                          const Column(
+                            children: [
+                              Divider(),
+                              Padding(
+                                padding: EdgeInsets.only(left: 6.0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Сроки хранения',
+                                    style: ThemeText.welcome,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        HtmlTextOnScreen(
+                            data: widget.person.durabilityAndStorage,
+                            width: constraints.maxWidth,
+                            isScreenWide: isScreenWide),
+                        if (widget.person.didYouKnow.length > 2)
+                          const Column(
+                            children: [
+                              Divider(),
+                              Padding(
+                                padding: EdgeInsets.only(left: 6.0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'А вы знали?',
+                                    style: ThemeText.welcome,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        HtmlTextOnScreen(
+                            data: widget.person.didYouKnow,
+                            width: constraints.maxWidth,
+                            isScreenWide: isScreenWide),
+                        if (widget.person.recipes.length != 0) ...[
+                          Column(
+                            children: [
+                              const Divider(),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 6.0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Рецепты',
+                                    style: ThemeText.welcome,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 16.0,
+                              ),
+                              RecipeList(
+                                recipe: widget.person.recipes,
+                              ),
+                              const SizedBox(
+                                height: 16.0,
+                              ),
+                            ],
+                          ),
+                        ]
                       ]),
                     );
                   }),
