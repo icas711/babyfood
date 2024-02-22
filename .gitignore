@@ -12,6 +12,8 @@ url.dataurls
 migrate_working_dir/
 *.lock
 
+.ios/
+
 # IntelliJ related
 *.iml
 *.ipr
