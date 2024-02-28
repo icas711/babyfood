@@ -3,12 +3,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class FullScreenImageViewer extends StatelessWidget {
-  const FullScreenImageViewer(this.url,{Key? key}) : super(key: key);
+  const FullScreenImageViewer(this.url,{super.key});
   final String url;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Назад')),
+      appBar: AppBar(title: const Text('Назад')),
       body: GestureDetector(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -30,35 +30,6 @@ class FullScreenImageViewer extends StatelessWidget {
   }
 }
 
-/*class FullScreenAssetImageViewer extends StatelessWidget {
-  final List<String> texts;
-  final List<String> urls;
-  final int index;
-  const FullScreenAssetImageViewer({super.key, required this.urls, required this.texts, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Hero(
-            tag: 'imageHero',
-            child: GradientImage(url: urls, text: texts,),
-            *//*Image.asset(url,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,*//*
-            //),
-          ),
-        ),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-    );
-  }
-}*/
 class FullscreenSlider extends StatelessWidget {
   final List<String> texts;
   final List<String> urls;
@@ -67,24 +38,19 @@ class FullscreenSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Назад')),
+      appBar: AppBar(title: const Text('Назад')),
       body: Builder(
         builder: (context) {
-          final double height = MediaQuery.of(context).size.height;
+          final height = MediaQuery.of(context).size.height;
           return CarouselSlider(
             options: CarouselOptions(
               height: height,
-              viewportFraction: 1.0,
-              enlargeCenterPage: false,
-              // autoPlay: false,
+              viewportFraction: 1,
             ),
             items: urls
-                .asMap().map((i, url) => MapEntry(i+index, Container(
-              //.map((item) => Container(
-              child: Center(
-                  child: GradientImage(url: urls[i+index>=texts.length?i+index-texts.length+1:i+index], text: texts[i+index>=texts.length?i+index-texts.length+1:i+index],
-                  )),
-            ))).values.toList()
+                .asMap().map((i, url) => MapEntry(i+index, Center(
+                    child: GradientImage(url: urls[i+index>=texts.length?i+index-texts.length+1:i+index], text: texts[i+index>=texts.length?i+index-texts.length+1:i+index],
+                    )))).values.toList()
           );
         },
       ),
@@ -92,12 +58,19 @@ class FullscreenSlider extends StatelessWidget {
   }
 }
 
-class GradientImage extends StatelessWidget {
-  Color gradientStart = Colors.transparent;
-  Color gradientEnd = Colors.black;
+class GradientImage extends StatefulWidget {
 final String url;
 final String text;
-  GradientImage({super.key, required this.url, required this.text});
+  const GradientImage({super.key, required this.url, required this.text});
+
+  @override
+  State<GradientImage> createState() => _GradientImageState();
+}
+
+class _GradientImageState extends State<GradientImage> {
+  Color gradientStart = Colors.transparent;
+
+  Color gradientEnd = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +96,7 @@ final String text;
                   //   tileMode: TileMode.clamp
                   // ),
                   image: DecorationImage(
-                    image: ExactAssetImage(url),
+                    image: ExactAssetImage(widget.url),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -131,21 +104,21 @@ final String text;
             ),
             Column(
               children: [
-                Spacer(),
+                const Spacer(),
                 Expanded(
+                  flex: 0,
                   child: Container(
-                    margin: EdgeInsets.only(bottom: 28.0),
+                    margin: const EdgeInsets.only(bottom: 28),
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    constraints: const BoxConstraints(
+                      maxWidth: 330,
+                    ),
                     child: Text(
-                     text,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                     widget.text,
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 18.0),
-                    constraints: BoxConstraints(
-                      maxWidth: 330.0,
-                    ),
                   ),
-                  flex: 0,
                 ),
               ],
             ),
