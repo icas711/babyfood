@@ -12,7 +12,7 @@ url.dataurls
 migrate_working_dir/
 *.lock
 
-.ios/
+ios/
 
 # IntelliJ related
 *.iml

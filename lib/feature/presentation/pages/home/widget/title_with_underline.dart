@@ -1,12 +1,14 @@
 import 'package:babyfood/core/utils/constants.dart';
 import 'package:babyfood/core/utils/textstyle.dart';
 import 'package:flutter/material.dart';
+
 class TitleWithMoreBtn extends StatelessWidget {
   const TitleWithMoreBtn({
     super.key,
     required this.title,
     this.press,
   });
+
   final String title;
   final Function? press;
 
@@ -25,9 +27,8 @@ class TitleWithMoreBtn extends StatelessWidget {
               //maxLines: 2,
             ),
           ),
-
-          if(press!=null)...[
-            ElevatedButton(
+          if (press != null) ...[
+            /* ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
                   MaterialStateProperty.all<Color>(kPrimaryColor),
@@ -40,6 +41,15 @@ class TitleWithMoreBtn extends StatelessWidget {
                       ),
                     ),
                   ),
+                ),*/
+            TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: const Color(0xff49A5C1),
+                  elevation: 10,
+                  shadowColor: const Color(0xff49A5C1),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(18)),
+                  ),
                 ),
                 onPressed: () {
                   press!();
@@ -47,10 +57,10 @@ class TitleWithMoreBtn extends StatelessWidget {
                 child: const Icon(
                   Icons.search,
                   color: Colors.white,
-                )),]
+                )),
+          ]
         ],
       ),
     );
   }
 }
-

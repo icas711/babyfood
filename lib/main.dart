@@ -25,8 +25,7 @@ void main() async {
   runApp(
     MultiBlocProvider(providers: [
       BlocProvider<GuideListCubit>(
-          lazy: false,
-          create: (context) => sl<GuideListCubit>()..loadGuide()),
+          lazy: false, create: (context) => sl<GuideListCubit>()..loadGuide()),
       BlocProvider<ConvenienceFoodListCubit>(
           lazy: false,
           create: (context) => sl<ConvenienceFoodListCubit>()..loadPerson()),
@@ -62,54 +61,51 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MaterialApp.router(
       routerConfig: goRouter,
       debugShowCheckedModeBanner: false,
-      theme:
-          /*ThemeData(
-        scaffoldBackgroundColor: kBackgroundColor,
-        primaryColor: kPrimaryColor,
-        textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),*/
-          ThemeData(
-              elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(
-                      color: Colors.white, fontWeight: kFontWeight),
-                  backgroundColor: kPrimaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(
-                      color: kPrimaryColor,
-                      width: 2.0,
-                    ),
-                  ),
+      theme: ThemeData(
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              backgroundColor: const Color(0xff49A5C1),
+              elevation: 10,
+              shadowColor: const Color(0xff49A5C1),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+              ),
+            ),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              textStyle:
+                  const TextStyle(color: Colors.white, fontWeight: kFontWeight),
+              backgroundColor: kPrimaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side: const BorderSide(
+                  color: kPrimaryColor,
+                  width: 2.0,
                 ),
               ),
-              /* inputDecorationTheme: const InputDecorationTheme(
-                fillColor: kPrimaryColor,
-                filled: true,
-              ),*/
-              appBarTheme: const AppBarTheme(
-                backgroundColor: kPrimaryColor,
-                centerTitle: true,
-                titleTextStyle: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700),
-                iconTheme: IconThemeData(
-                  color: Colors.white,
-                ),
-              ),
-              scaffoldBackgroundColor: kBackgroundColor,
-              navigationBarTheme: NavigationBarThemeData(
-                backgroundColor: Colors.blueGrey.shade100,
-                iconTheme: const MaterialStatePropertyAll(IconThemeData(
-                  color: Colors.black87,
-                )),
-                labelTextStyle: const MaterialStatePropertyAll(TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w700,
-                )),
-              )),
+            ),
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: kPrimaryColor,
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+                fontSize: 22, color: Colors.white, fontWeight: FontWeight.w700),
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+          ),
+          scaffoldBackgroundColor: kBackgroundColor,
+          navigationBarTheme: NavigationBarThemeData(
+            backgroundColor: Colors.blueGrey.shade100,
+            iconTheme: const MaterialStatePropertyAll(IconThemeData(
+              color: Colors.black87,
+            )),
+            labelTextStyle: const MaterialStatePropertyAll(TextStyle(
+              color: Colors.black87,
+              fontWeight: FontWeight.w700,
+            )),
+          )),
     );
   }
 
@@ -117,25 +113,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     MobileAds.initialize();
-
-    //WidgetsBinding.instance.addObserver(this);
   }
-
-/* @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && !AppOpenAdManager.isAdShowing) {
-      _appOpenAdManager.showAdIfAvailable();
-    }
-  }*/
 }
 
-// Stateful navigation based on:
-// https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
 class ScaffoldWithNestedNavigation extends StatelessWidget {
   const ScaffoldWithNestedNavigation({
     Key? key,
@@ -147,10 +127,6 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
   void _goBranch(int index) {
     navigationShell.goBranch(
       index,
-      // A common pattern when using bottom navigation bars is to support
-      // navigating to the initial location when tapping the item that is
-      // already active. This example demonstrates how to support this behavior,
-      // using the initialLocation parameter of goBranch.
       initialLocation: index == navigationShell.currentIndex,
     );
   }
