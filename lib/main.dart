@@ -1,18 +1,17 @@
 import 'dart:io';
 
 import 'package:babyfood/core/utils/constants.dart';
-import 'package:babyfood/feature/presentation/bloc/guide_list_cubit/guide_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_food_list_cubit.dart';
+import 'package:babyfood/feature/presentation/bloc/guide_list_cubit/guide_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/recipe_list_cubit/recipe_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:babyfood/initaial.dart';
+import 'package:babyfood/locator_service.dart' as di;
 import 'package:babyfood/locator_service.dart';
 import 'package:babyfood/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:babyfood/locator_service.dart' as di;
 import 'package:yandex_mobileads/mobile_ads.dart';
 
 void main() async {
@@ -21,6 +20,13 @@ void main() async {
   await di.init();
   // turn off the # in the URLs on the web
   //usePathUrlStrategy();
+  final countryCode = Platform.localeName.split('_')[1];
+
+
+    if (countryCode == 'RU') {
+      await MobileAds.setUserConsent(true);
+      //print(countryCode);
+    }
 
   runApp(
     MultiBlocProvider(providers: [
@@ -36,7 +42,7 @@ void main() async {
           create: (context) => sl<RecipeListCubit>()..loadRecipe()),
       BlocProvider<RecipeSearchBloc>(
           create: (context) => sl<RecipeSearchBloc>()),
-    ], child: MyApp()),
+    ], child: const MyApp()),
   );
 }
 
@@ -49,14 +55,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //final _appOpenAdManager = AppOpenAdManager()..loadAppOpenAd();
-  String countryCode = Platform.localeName.split('_')[1];
+
 
   @override
   Widget build(BuildContext context) {
-    if (countryCode == 'RU') {
-      MobileAds.setUserConsent(true);
-      //print(countryCode);
-    }
 
     return MaterialApp.router(
       routerConfig: goRouter,
@@ -78,10 +80,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   const TextStyle(color: Colors.white, fontWeight: kFontWeight),
               backgroundColor: kPrimaryColor,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
+                borderRadius: BorderRadius.circular(18),
                 side: const BorderSide(
                   color: kPrimaryColor,
-                  width: 2.0,
+                  width: 2,
                 ),
               ),
             ),
@@ -110,9 +112,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-    MobileAds.initialize();
+    await MobileAds.initialize();
   }
 }
 

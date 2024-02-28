@@ -1,3 +1,4 @@
+import 'package:babyfood/feature/data/models/convenience_food_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ConvenienceFoodEntity extends Equatable {
@@ -16,7 +17,7 @@ class ConvenienceFoodEntity extends Equatable {
   final String durabilityAndStorage;
   final String didYouKnow;
   final String videos;
-  final recipes;
+  final List<ConvenienceFoodListModel>? recipes;
 
   const ConvenienceFoodEntity(
       {required this.id,
