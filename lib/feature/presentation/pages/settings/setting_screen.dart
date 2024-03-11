@@ -67,7 +67,6 @@ class _SettingScreenState extends State<SettingScreen> {
     _getprefs();
   }
 
-  //final PersonListCubit cubit =  PersonListCubit(getAllPersons: PagePersonParams(page: 1));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +95,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 15),
-                    child: ElevatedButton(
+                    child: TextButton(
                         onPressed: () {
                           _clearCache();
                           showDialog<String>(
@@ -107,7 +106,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                   'Библиотека полностью обновилась. Возможно появились новые рецепты, гайды и продукты.\n'
                                   'Но т.к. приложение проводит проверку новых данных при включении, то это не обязательная процедура.'),
                               actions: <Widget>[
-                                ElevatedButton(
+                                TextButton(
                                   onPressed: () =>
                                       Navigator.pop(context, 'Закрыть'),
                                   child: const Text('Закрыть'),
@@ -133,7 +132,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   title: MobileAds.userConsent
                       ? const Text('Согласие пользователя принято')
                       : const Text('Согласие пользователя отклонено'),
-                  trailing: ElevatedButton(
+                  trailing: TextButton(
                     child: Text('Изменить', style: TextStyle(
                         color: Colors.white),),
                     onPressed: () async {

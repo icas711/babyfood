@@ -10,8 +10,8 @@ abstract class ThemeText {
 
   static const TextStyle progressBody = TextStyle(
       fontFamily: 'Montserrat',
-      color: Colors.white,
-      fontSize: 10,
+      color: Colors.blueAccent,
+      fontSize: 12,
       fontWeight: FontWeight.w400);
 
   static const TextStyle progressFooter = TextStyle(
@@ -37,7 +37,11 @@ abstract class ThemeText {
       color: kPrimaryColor,
       fontSize: 20,
       fontWeight: FontWeight.w400);
-
+  static const TextStyle buttonText = TextStyle(
+      fontFamily: 'Montserrat',
+      color: Colors.white,
+      fontSize: 20,
+      fontWeight: FontWeight.w400);
   static const TextStyle sliverTextHeader = TextStyle(
       fontFamily: 'Montserrat',
       color: kPrimaryColor,
@@ -67,7 +71,7 @@ abstract class ThemeText {
 
   static const TextStyle logo = TextStyle(
       fontFamily: 'MaterialIcons',
-      color: Colors.white,
+      color: Colors.blueAccent,
       fontSize: 40,
       fontWeight: FontWeight.w500,
       decoration: TextDecoration.none

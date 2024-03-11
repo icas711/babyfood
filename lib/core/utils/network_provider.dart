@@ -1,7 +1,5 @@
+import 'package:babyfood/core/platform/network_ad.dart';
 import 'package:flutter/foundation.dart';
-import 'package:yandex_mobileads/mobile_ads.dart';
-
-import '../platform/network_ad.dart';
 
 abstract class NetworkProvider {
   static final NetworkProvider instance = _createInstance();

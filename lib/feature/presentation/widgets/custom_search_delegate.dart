@@ -5,6 +5,7 @@ import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_f
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_event.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_state.dart';
+import 'package:babyfood/feature/presentation/pages/error.dart';
 import 'package:babyfood/feature/presentation/widgets/search_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,7 +86,6 @@ class ShowListFoods extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Inside custom search delegate and search query is $query');
     BlocProvider.of<PersonSearchBloc>(context, listen: false)
         .add(SearchPersons(query));
 
@@ -98,7 +98,7 @@ class ShowListFoods extends StatelessWidget {
         } else if (state is PersonSearchLoaded) {
           final food = state.persons;
           if (food.isEmpty) {
-            return _showErrorText('Не найдено');
+            return const ErrorScreen(textMessage: 'Не найдено');
           }
           return GridView.builder(
             itemCount: food.isNotEmpty ? food.length : 0,
@@ -125,7 +125,7 @@ class ShowListFoods extends StatelessWidget {
             ),
           );
         } else if (state is PersonSearchError) {
-          return _showErrorText(state.message);
+          return ErrorScreen(textMessage:  state.message);
         } else {
           return const Center(
             child: Icon(Icons.now_wallpaper),
@@ -135,18 +135,4 @@ class ShowListFoods extends StatelessWidget {
     );
   }
 
-  Widget _showErrorText(String errorMessage) {
-    return Container(
-      color: Colors.black,
-      child: Center(
-        child: Text(
-          errorMessage,
-          style: const TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
 }

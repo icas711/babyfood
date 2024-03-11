@@ -1,18 +1,17 @@
 import 'dart:io';
 
 import 'package:babyfood/core/utils/constants.dart';
-import 'package:babyfood/feature/presentation/bloc/guide_list_cubit/guide_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_food_list_cubit.dart';
+import 'package:babyfood/feature/presentation/bloc/guide_list_cubit/guide_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/recipe_list_cubit/recipe_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:babyfood/initaial.dart';
+import 'package:babyfood/locator_service.dart' as di;
 import 'package:babyfood/locator_service.dart';
 import 'package:babyfood/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:babyfood/locator_service.dart' as di;
 import 'package:yandex_mobileads/mobile_ads.dart';
 
 void main() async {
@@ -21,12 +20,18 @@ void main() async {
   await di.init();
   // turn off the # in the URLs on the web
   //usePathUrlStrategy();
+  final countryCode = Platform.localeName.split('_')[1];
+
+
+    if (countryCode == 'RU') {
+      //await MobileAds.setUserConsent(true);
+      //print(countryCode);
+    }
 
   runApp(
     MultiBlocProvider(providers: [
       BlocProvider<GuideListCubit>(
-          lazy: false,
-          create: (context) => sl<GuideListCubit>()..loadGuide()),
+          lazy: false, create: (context) => sl<GuideListCubit>()..loadGuide()),
       BlocProvider<ConvenienceFoodListCubit>(
           lazy: false,
           create: (context) => sl<ConvenienceFoodListCubit>()..loadPerson()),
@@ -37,7 +42,7 @@ void main() async {
           create: (context) => sl<RecipeListCubit>()..loadRecipe()),
       BlocProvider<RecipeSearchBloc>(
           create: (context) => sl<RecipeSearchBloc>()),
-    ], child: MyApp()),
+    ], child: const MyApp()),
   );
 }
 
@@ -50,92 +55,69 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //final _appOpenAdManager = AppOpenAdManager()..loadAppOpenAd();
-  String countryCode = Platform.localeName.split('_')[1];
+
 
   @override
   Widget build(BuildContext context) {
-    if (countryCode == 'RU') {
-      MobileAds.setUserConsent(true);
-      //print(countryCode);
-    }
 
     return MaterialApp.router(
       routerConfig: goRouter,
       debugShowCheckedModeBanner: false,
-      theme:
-          /*ThemeData(
-        scaffoldBackgroundColor: kBackgroundColor,
-        primaryColor: kPrimaryColor,
-        textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),*/
-          ThemeData(
-              elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(
-                      color: Colors.white, fontWeight: kFontWeight),
-                  backgroundColor: kPrimaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(
-                      color: kPrimaryColor,
-                      width: 2.0,
-                    ),
-                  ),
+      theme: ThemeData(
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              backgroundColor: const Color(0xff49A5C1),
+              elevation: 10,
+              shadowColor: const Color(0xff49A5C1),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+              ),
+            ),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              textStyle:
+                  const TextStyle(color: Colors.white, fontWeight: kFontWeight),
+              backgroundColor: kPrimaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18),
+                side: const BorderSide(
+                  color: kPrimaryColor,
+                  width: 2,
                 ),
               ),
-              /* inputDecorationTheme: const InputDecorationTheme(
-                fillColor: kPrimaryColor,
-                filled: true,
-              ),*/
-              appBarTheme: const AppBarTheme(
-                backgroundColor: kPrimaryColor,
-                centerTitle: true,
-                titleTextStyle: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700),
-                iconTheme: IconThemeData(
-                  color: Colors.white,
-                ),
-              ),
-              scaffoldBackgroundColor: kBackgroundColor,
-              navigationBarTheme: NavigationBarThemeData(
-                backgroundColor: Colors.blueGrey.shade100,
-                iconTheme: const MaterialStatePropertyAll(IconThemeData(
-                  color: Colors.black87,
-                )),
-                labelTextStyle: const MaterialStatePropertyAll(TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w700,
-                )),
-              )),
+            ),
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: kPrimaryColor,
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+                fontSize: 22, color: Colors.white, fontWeight: FontWeight.w700),
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+          ),
+          scaffoldBackgroundColor: kBackgroundColor,
+          navigationBarTheme: NavigationBarThemeData(
+            backgroundColor: Colors.blueGrey.shade100,
+            iconTheme: const MaterialStatePropertyAll(IconThemeData(
+              color: Colors.black87,
+            )),
+            labelTextStyle: const MaterialStatePropertyAll(TextStyle(
+              color: Colors.black87,
+              fontWeight: FontWeight.w700,
+            )),
+          )),
     );
   }
 
   @override
-  void initState() {
+  void initState()  {
     super.initState();
     MobileAds.initialize();
-
-    //WidgetsBinding.instance.addObserver(this);
   }
-
-/* @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && !AppOpenAdManager.isAdShowing) {
-      _appOpenAdManager.showAdIfAvailable();
-    }
-  }*/
 }
 
-// Stateful navigation based on:
-// https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
 class ScaffoldWithNestedNavigation extends StatelessWidget {
   const ScaffoldWithNestedNavigation({
     Key? key,
@@ -147,10 +129,6 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
   void _goBranch(int index) {
     navigationShell.goBranch(
       index,
-      // A common pattern when using bottom navigation bars is to support
-      // navigating to the initial location when tapping the item that is
-      // already active. This example demonstrates how to support this behavior,
-      // using the initialLocation parameter of goBranch.
       initialLocation: index == navigationShell.currentIndex,
     );
   }

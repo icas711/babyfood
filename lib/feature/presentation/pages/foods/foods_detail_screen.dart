@@ -1,26 +1,22 @@
 import 'package:babyfood/core/utils/constants.dart';
+import 'package:babyfood/core/utils/network_provider.dart';
 import 'package:babyfood/core/utils/textstyle.dart';
 import 'package:babyfood/feature/domain/entities/convenience_food_entity.dart';
 import 'package:babyfood/feature/presentation/pages/foods/widget/recipe_list_widget.dart';
 import 'package:babyfood/feature/presentation/widgets/bolding_text.dart';
-import 'package:babyfood/core/utils/network_provider.dart';
 import 'package:babyfood/feature/presentation/widgets/food_cache_image_widget.dart';
 import 'package:babyfood/feature/presentation/widgets/question_button_nutritial_rating.dart';
 import 'package:babyfood/feature/presentation/widgets/selectable_button.dart';
 import 'package:babyfood/feature/presentation/widgets/star_rating.dart';
 import 'package:babyfood/feature/presentation/widgets/text_on_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  /// Constructs a [DetailsScreen].
 
-  /// The label to display in the center of the screen.
   final ConvenienceFoodEntity person;
 
-  const ProductDetailsScreen({Key? key, required this.person})
-      : super(key: key);
+  const ProductDetailsScreen({super.key, required this.person});
 
   @override
   State<ProductDetailsScreen> createState() => _PersonDetailPageState();
@@ -29,10 +25,10 @@ class ProductDetailsScreen extends StatefulWidget {
 class _PersonDetailPageState extends State<ProductDetailsScreen> {
   final networks = NetworkProvider.instance.bannerNetworks;
 
-  late var adUnitId = networks.first.adUnitId;
-  var adRequest = const AdRequest();
-  var isLoading = false;
-  var isBannerAlreadyCreated = false;
+  late String adUnitId = networks.first.adUnitId;
+  AdRequest adRequest = const AdRequest();
+  bool isLoading = false;
+  bool isBannerAlreadyCreated = false;
   bool isSticky = true;
   late BannerAd banner;
 
@@ -54,17 +50,17 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
   };
 
   String checkNum(int x){
-    return x<10?"0${x}":x.toString();
+    return x<10?'0$x':x.toString();
   }
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _loadBanner());
+    WidgetsBinding.instance.addPostFrameCallback((_) async => _loadBanner());
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isScreenWide = MediaQuery.sizeOf(context).width >= Routes.mediumScreen;
+    final isScreenWide = MediaQuery.sizeOf(context).width >= Routes.mediumScreen;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.person.name),
@@ -83,8 +79,8 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
 
                 children: [
                   LayoutBuilder(builder:
-                      (BuildContext context, BoxConstraints constraints) {
-                    return Container(
+                      (context, constraints) {
+                    return SizedBox(
                       width: isScreenWide
                           ? constraints.maxWidth /
                               2 //MediaQuery.sizeOf(context).width / 2.4
@@ -95,8 +91,8 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                             child: Image.network(person.image, fit: BoxFit.fill),
                           ),*/
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
+                            padding: const EdgeInsets.all(8),
+                            child: SizedBox(
                               width: double.infinity,
                               child: AspectRatio(
                                 aspectRatio: 4 / 3,
@@ -112,7 +108,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                           ),
                           Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
                               widget.person.name,
                               style: const TextStyle(
@@ -149,7 +145,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                                         PartBoldText(
                                             part1: 'Нутритивная польза:',
                                             part2: ''),
-                                        Container(
+                                        SizedBox(
                                           height: 20,
                                           width: 120,
                                           child: StarRating(
@@ -158,7 +154,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                                             color: Colors.black87,
                                           ),
                                         ),
-                                        Container(
+                                        SizedBox(
                                             width: 30,
                                             child: NutritialRatingOwerview()),
                                       ]),
@@ -210,8 +206,8 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                     );
                   }),
                   LayoutBuilder(builder:
-                      (BuildContext context, BoxConstraints constraints) {
-                    return Container(
+                      (context, constraints) {
+                    return SizedBox(
                       width: isScreenWide
                           ? constraints.maxWidth /
                               2 //MediaQuery.sizeOf(context).width / 2.4
@@ -221,7 +217,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                           height: 16,
                         ),
                         const Padding(
-                          padding: EdgeInsets.only(left: 6.0),
+                          padding: EdgeInsets.only(left: 6),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -238,7 +234,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                           children: [
                             Divider(),
                             Padding(
-                              padding: EdgeInsets.only(left: 6.0),
+                              padding: EdgeInsets.only(left: 6),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
@@ -258,7 +254,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                             children: [
                               Divider(),
                               Padding(
-                                padding: EdgeInsets.only(left: 6.0),
+                                padding: EdgeInsets.only(left: 6),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -278,7 +274,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                             children: [
                               Divider(),
                               Padding(
-                                padding: EdgeInsets.only(left: 6.0),
+                                padding: EdgeInsets.only(left: 6),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -298,7 +294,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                             children: [
                               Divider(),
                               Padding(
-                                padding: EdgeInsets.only(left: 6.0),
+                                padding: EdgeInsets.only(left: 6),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -313,12 +309,12 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                             data: widget.person.didYouKnow,
                             width: constraints.maxWidth,
                             isScreenWide: isScreenWide),
-                        if (widget.person.recipes.length != 0) ...[
+                        if (widget.person.recipes!.isNotEmpty) ...[
                           Column(
                             children: [
                               const Divider(),
                               const Padding(
-                                padding: EdgeInsets.only(left: 6.0),
+                                padding: EdgeInsets.only(left: 6),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -328,13 +324,13 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 16.0,
+                                height: 16,
                               ),
                               RecipeList(
-                                recipe: widget.person.recipes,
+                                recipe: widget.person.recipes!,
                               ),
                               const SizedBox(
-                                height: 16.0,
+                                height: 16,
                               ),
                             ],
                           ),
@@ -359,7 +355,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
         selected: selectedButtons[element.key]!,
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
+            (states) {
               if (states.contains(MaterialState.selected)) {
                 return kSelectedColor;
               }
@@ -386,7 +382,7 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
     final windowSize = MediaQuery.of(context).size;
     setState(() => isLoading = true);
     if (isBannerAlreadyCreated) {
-      banner.loadAd(adRequest: adRequest);
+      await banner.loadAd(adRequest: adRequest);
     } else {
       final adSize = isSticky
           ? BannerAdSize.sticky(width: windowSize.width.toInt())
@@ -394,8 +390,8 @@ class _PersonDetailPageState extends State<ProductDetailsScreen> {
               width: windowSize.width.toInt(),
               maxHeight: windowSize.height ~/ 3,
             );
-      var calculatedBannerSize = await adSize.getCalculatedBannerAdSize();
-      debugPrint('calculatedBannerSize: ${calculatedBannerSize.toString()}');
+      final calculatedBannerSize = await adSize.getCalculatedBannerAdSize();
+      debugPrint('calculatedBannerSize: $calculatedBannerSize');
       banner = _createBanner(adSize);
 
       setState(() {

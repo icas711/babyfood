@@ -6,6 +6,7 @@ import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_f
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_event.dart';
 import 'package:babyfood/feature/presentation/bloc/search_bloc/search_state.dart';
+import 'package:babyfood/feature/presentation/pages/error.dart';
 import 'package:babyfood/feature/presentation/pages/recipes/widget/recipe_search_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,8 +70,6 @@ class RecipeSearchDelegate extends SearchDelegate {
             onTap: () {
               query = result;
               showResults(context);
-              //buildResults(context);
-              //ShowListFoods(query: result);
             },
           );
         });
@@ -84,7 +83,6 @@ class ShowListFoods extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Inside custom search delegate and search query is $query');
     BlocProvider.of<RecipeSearchBloc>(context, listen: false)
         .add(SearchRecipes(query));
 
@@ -97,7 +95,7 @@ class ShowListFoods extends StatelessWidget {
         } else if (state is RecipeSearchLoaded) {
           final recipe = state.recipes;
           if (recipe.isEmpty) {
-            return _showErrorText('Не найдено');
+            return const ErrorScreen(textMessage: 'Не найдено');
           }
           return GridView.builder(
             itemCount: recipe.isNotEmpty ? recipe.length : 0,
@@ -124,7 +122,7 @@ class ShowListFoods extends StatelessWidget {
             ),
           );
         } else if (state is RecipeSearchError) {
-          return _showErrorText(state.message);
+          return ErrorScreen(textMessage:  state.message);
         } else {
           return const Center(
             child: Icon(Icons.now_wallpaper),
