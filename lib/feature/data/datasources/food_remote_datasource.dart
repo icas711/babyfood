@@ -1,11 +1,8 @@
 
+import 'package:babyfood/feature/data/datasources/url.dataurls';
 import 'package:babyfood/feature/data/models/convenience_food_model.dart';
-import 'package:babyfood/splash.dart';
-import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:mysql1/mysql1.dart';
-
-import 'url.dataurls';
 
 abstract class ConvenienceFoodRemoteDataSource {
   Future<List<ConvenienceFoodModel>> getAllFoods(int start,int end);

@@ -24,7 +24,7 @@ void main() async {
 
 
     if (countryCode == 'RU') {
-      await MobileAds.setUserConsent(true);
+      //await MobileAds.setUserConsent(true);
       //print(countryCode);
     }
 
@@ -112,9 +112,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   @override
-  Future<void> initState() async {
+  void initState()  {
     super.initState();
-    await MobileAds.initialize();
+    MobileAds.initialize();
   }
 }
 

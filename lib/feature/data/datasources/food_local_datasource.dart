@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:babyfood/core/error/exception.dart';
 import 'package:babyfood/feature/data/models/convenience_food_model.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,10 +36,10 @@ class PersonLocalDataSourceImpl implements PersonLocalDataSource {
         sharedPreferences.getStringList(CACHED_FOOD_LIST) ?? [];
 
     //if(jsonPersonsList!=null) {
-    if (jsonPersonsList!.isNotEmpty) {
-      debugPrint('Get Foods from Cache: ${jsonPersonsList!.length}');
-      return Future.value(jsonPersonsList!
-          .map((person) => ConvenienceFoodModel.fromJson(json.decode(person!)))
+    if (jsonPersonsList.isNotEmpty) {
+      debugPrint('Get Foods from Cache: ${jsonPersonsList.length}');
+      return Future.value(jsonPersonsList
+          .map((person) => ConvenienceFoodModel.fromJson(json.decode(person)))
           .toList());
     } else {
       debugPrint('Get Foods from Cache:');
@@ -50,10 +49,10 @@ class PersonLocalDataSourceImpl implements PersonLocalDataSource {
 
   @override
   Future<List<String>> foodsToCache(List<ConvenienceFoodModel> persons) async {
-    final List<String> jsonPersonsList =
+    final jsonPersonsList =
         persons.map((person) => json.encode(person.toJson())).toList();
-    List<String> cachedFoods =
-        await sharedPreferences.getStringList(CACHED_FOOD_LIST) ?? [];
+    final cachedFoods =
+        sharedPreferences.getStringList(CACHED_FOOD_LIST) ?? [];
 
     cachedFoods!.addAll(jsonPersonsList);
 
@@ -66,7 +65,7 @@ class PersonLocalDataSourceImpl implements PersonLocalDataSource {
 
   @override
   Future<void> searchFoodsToCache(List<ConvenienceFoodModel> persons) {
-    final List<String> jsonPersonsList =
+    final jsonPersonsList =
         persons.map((person) => json.encode(person.toJson())).toList();
     sharedPreferences.setStringList(CACHED_FOOD_SEARCH_LIST, jsonPersonsList);
    // debugPrint('Persons to write Cache: ${jsonPersonsList.length}');
@@ -75,14 +74,12 @@ class PersonLocalDataSourceImpl implements PersonLocalDataSource {
 
   @override
   Future<List<ConvenienceFoodModel>> getLastSearchFoodsFromCache() {
-    var jsonPersonsList =
+    final jsonPersonsList =
         sharedPreferences.getStringList(CACHED_FOOD_SEARCH_LIST) ?? [];
 
-    //if(jsonPersonsList!=null) {
-    if (jsonPersonsList!.isNotEmpty) {
-      //debugPrint('Get Foods from Cache: ${jsonPersonsList!.length}');
-      return Future.value(jsonPersonsList!
-          .map((person) => ConvenienceFoodModel.fromJson(json.decode(person!)))
+    if (jsonPersonsList.isNotEmpty) {
+      return Future.value(jsonPersonsList
+          .map((person) => ConvenienceFoodModel.fromJson(json.decode(person)))
           .toList());
     } else {
       throw CacheException();

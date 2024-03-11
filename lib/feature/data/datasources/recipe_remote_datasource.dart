@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:babyfood/feature/data/datasources/url.dataurls';
 import 'package:babyfood/feature/data/models/recipe_model.dart';
-import 'package:babyfood/feature/presentation/bloc/loading_screen_cubit/loading_screen_cubit.dart';
-import 'package:babyfood/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mysql1/mysql1.dart';
@@ -22,7 +20,7 @@ class RecipeRemoteDataSourceImpl implements RecipeRemoteDataSource {
 
   @override
   Future<List<RecipeModel>> loadMissed(String tableName, SharedPreferences prefs,List<int> foodsId) async {
-    int counter=0;
+
     final conn = await MySqlConnection.connect(ConnectionSettings(
         host: hostSql,
         port: portSql,
@@ -30,13 +28,13 @@ class RecipeRemoteDataSourceImpl implements RecipeRemoteDataSource {
         db: dbSql,
         password: passwordSql));
 
-    var resultsId = await conn.query('select id from $tableName');
+    final resultsId = await conn.query('select id from $tableName');
     List<int> missed=[];
-    for (var row in resultsId) {
+    for (final row in resultsId) {
       bool checkin=false;
-      foodsId.forEach((element) {
+      for (final element in foodsId) {
         if(element==row['id']) checkin=true;
-      });
+      }
       if(!checkin) {missed.add(row['id']);
       print('Missed id: ${row["id"]}');}
     }
