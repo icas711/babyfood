@@ -8,13 +8,17 @@ import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_f
 import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_food_list_state.dart';
 import 'package:babyfood/feature/presentation/bloc/recipe_list_cubit/recipe_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/recipe_list_cubit/recipe_list_state.dart';
+import 'package:babyfood/feature/presentation/pages/account_screen.dart';
 import 'package:babyfood/feature/presentation/pages/foods/foods_detail_screen.dart';
 import 'package:babyfood/feature/presentation/pages/foods/foods_screen.dart';
 import 'package:babyfood/feature/presentation/pages/home/home_details_screen.dart';
 import 'package:babyfood/feature/presentation/pages/home/home_screen.dart';
+import 'package:babyfood/feature/presentation/pages/login_screen.dart';
 import 'package:babyfood/feature/presentation/pages/recipes/recipe_detail_screen.dart';
 import 'package:babyfood/feature/presentation/pages/recipes/recipes_screen.dart';
 import 'package:babyfood/feature/presentation/pages/settings/setting_screen.dart';
+import 'package:babyfood/feature/presentation/pages/settings/widgets/login_widget.dart';
+import 'package:babyfood/feature/presentation/pages/signup_screen.dart';
 import 'package:babyfood/main.dart';
 import 'package:babyfood/splash.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +26,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
-
 
 final _shellNavigatorHomeKey =
     GlobalKey<NavigatorState>(debugLabel: 'shellHome');
@@ -76,8 +79,29 @@ final goRouter = GoRouter(
                     );
                   },
                 ),
+                GoRoute(
+                  path: 'login',
+                  name: 'login',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    child: LoginScreen(),
+                  ),
+                ),GoRoute(
+                  path: 'signup',
+                  name: 'signup',
+                  pageBuilder: (context, state) => const NoTransitionPage(
+                    child: SignUpScreen(),
+                  ),
+                ),
+                GoRoute(
+                  path: 'account',
+                  name: 'account',
+                  pageBuilder: (context, state) => const NoTransitionPage(
+                    child: AccountScreen(),
+                  ),
+                ),
               ],
             ),
+
           ],
         ),
         StatefulShellBranch(
@@ -98,7 +122,8 @@ final goRouter = GoRouter(
                         int.tryParse(state.pathParameters['foodId']!);
 
                     final _tyuw =
-                        BlocProvider.of<ConvenienceFoodListCubit>(context).state;
+                        BlocProvider.of<ConvenienceFoodListCubit>(context)
+                            .state;
                     final foodlist = (_tyuw as FoodLoaded).foodsList;
                     ConvenienceFoodEntity food = foodlist[0];
                     for (int i = 0; i < foodlist.length; i++) {
@@ -159,7 +184,6 @@ final goRouter = GoRouter(
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: SettingScreen(),
               ),
-
             ),
           ],
         ),
@@ -190,7 +214,8 @@ class ScaffoldWithNavigationBar extends StatelessWidget {
         //elevation: 50,
         //surfaceTintColor: kPrimaryColor,
         //labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        indicatorColor: Colors.transparent,// Colors.blueGrey.shade100,
+        indicatorColor: Colors.transparent,
+        // Colors.blueGrey.shade100,
         //kBackgroundColor,
         //kPrimaryColor.withOpacity(0.23),
         //shadowColor: Colors.black87,
@@ -201,7 +226,7 @@ class ScaffoldWithNavigationBar extends StatelessWidget {
           top: BorderSide(
               color: kPrimaryColor, width: 3, style: BorderStyle.solid),
         ),
-        destinations:  const [
+        destinations: const [
           NavigationDestination(
             label: 'Главная',
             icon: Icon(Icons.home_outlined),
@@ -210,7 +235,7 @@ class ScaffoldWithNavigationBar extends StatelessWidget {
           NavigationDestination(
             label: 'Продукты',
             icon: //Image.asset('assets/images/mango.png',width: 30,),
-            Icon(Icons.search_outlined),
+                Icon(Icons.search_outlined),
             selectedIcon: Icon(Icons.search),
           ),
           NavigationDestination(
@@ -293,4 +318,3 @@ class ScaffoldWithNavigationRail extends StatelessWidget {
     );
   }
 }
-

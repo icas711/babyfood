@@ -39,6 +39,9 @@ dependencies:
   url_launcher: ^6.2.4
   mysql1: ^0.20.0
   flutter_spinkit: ^5.2.0
+  firebase_core: ^2.27.1
+  firebase_auth: ^4.17.9
+  google_fonts:
 
 
 
