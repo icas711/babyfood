@@ -9,22 +9,29 @@ import 'package:babyfood/initaial.dart';
 import 'package:babyfood/locator_service.dart' as di;
 import 'package:babyfood/locator_service.dart';
 import 'package:babyfood/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await initialApp();
   await di.init();
   // turn off the # in the URLs on the web
   //usePathUrlStrategy();
+
   final countryCode = Platform.localeName.split('_')[1];
 
 
     if (countryCode == 'RU') {
-      //await MobileAds.setUserConsent(true);
+      await MobileAds.setUserConsent(true);
       //print(countryCode);
     }
 

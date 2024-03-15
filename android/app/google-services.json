@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "154376222956",
+    "project_id": "babyfood-auth",
+    "storage_bucket": "babyfood-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154376222956:android:0d69efb207a79345a94dc9",
+        "android_client_info": {
+          "package_name": "com.babylabpro.babyfood"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGRBKU2lcTIhXdnU1Qvgg0mRaJ6kGnxjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

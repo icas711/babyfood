@@ -40,12 +40,11 @@ class _SettingScreenState extends State<SettingScreen> {
     await prefs.remove('babyrecipe');
     await prefs.remove('babyguides');
     //await DefaultCacheManager().emptyCache();
-    DefaultCacheManager manager = DefaultCacheManager();
-    manager.emptyCache();
-    imageCache!.clear();
-    imageCache!.clearLiveImages();
-    //DefaultCacheManager().store.emptyMemoryCache();
-    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    final manager = DefaultCacheManager();
+    await manager.emptyCache();
+    imageCache..clear()
+    ..clearLiveImages();
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
     await prefs.setInt('DATE_CACHED_FOOD_LIST', timestamp);
     setState(() {
       dateCahedList = DateTime.now();
@@ -124,6 +123,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
+
             ListView(
               shrinkWrap: true,
               children: [
@@ -133,14 +133,14 @@ class _SettingScreenState extends State<SettingScreen> {
                       ? const Text('Согласие пользователя принято')
                       : const Text('Согласие пользователя отклонено'),
                   trailing: TextButton(
-                    child: Text('Изменить', style: TextStyle(
+                    child: const Text('Изменить', style: TextStyle(
                         color: Colors.white),),
                     onPressed: () async {
                       final bool result = await showDialog(
                         context: context,
                         builder: (context) => const GdprDialog(),
                       );
-                      MobileAds.setUserConsent(result);
+                      await MobileAds.setUserConsent(result);
                       setState(() {});
                     },
                   ),
