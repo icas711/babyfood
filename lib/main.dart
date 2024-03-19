@@ -12,6 +12,7 @@ import 'package:babyfood/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
@@ -49,7 +50,7 @@ void main() async {
           create: (context) => sl<RecipeListCubit>()..loadRecipe()),
       BlocProvider<RecipeSearchBloc>(
           create: (context) => sl<RecipeSearchBloc>()),
-    ], child: const MyApp()),
+    ], child: const ProviderScope(child: MyApp())),
   );
 }
 

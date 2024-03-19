@@ -1,27 +1,24 @@
-import 'dart:async';
-
-import 'package:babyfood/feature/presentation/widgets/services/snak_bar_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:babyfood/feature/presentation/widgets/wm/login_controller.dart';
+import 'package:babyfood/feature/presentation/widgets/wm/login_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreen();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreen();
 }
 
-class _SignUpScreen extends State<SignUpScreen> {
+class _SignUpScreen extends ConsumerState<SignUpScreen> {
   bool isHiddenPassword = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordTextRepeatInputController =
       TextEditingController();
   final formKey = GlobalKey<FormState>();
-  bool validateEmail= true;
+  bool validateEmail = true;
 
   @override
   void dispose() {
@@ -38,48 +35,6 @@ class _SignUpScreen extends State<SignUpScreen> {
     });
   }
 
-  Future<void> signUp() async {
-
-    final isValid = formKey.currentState!.validate();
-    if (!isValid) return;
-
-    if (passwordController.text !=
-        passwordTextRepeatInputController.text) {
-      unawaited(SnackBarService.showSnackBar(
-        context,
-        'Пароли должны совпадать',
-        true,
-      ));
-      return;
-    }
-
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e.code);
-
-      if (e.code == 'email-already-in-use') {
-        unawaited(SnackBarService.showSnackBar(
-          context,
-          'Такой Email уже используется, повторите попытку с использованием другого Email',
-          true,
-        ));
-        return;
-      } else {
-        unawaited(SnackBarService.showSnackBar(
-          context,
-          'Неизвестная ошибка! Попробуйте еще раз или обратитесь в поддержку.',
-          true,
-        ));
-      }
-    }
-
-    navigator.pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
-  }
-
   bool validator(String email) {
     return RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -88,6 +43,16 @@ class _SignUpScreen extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<LoginState>(loginControllerProvider, (previous, next) {
+      if(next is LoginStateError){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.error),backgroundColor: Colors.red,));
+      }
+      if(next is SentVerifyEmailState)
+        {
+          context.goNamed('account');
+        }
+
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -106,9 +71,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
                 controller: emailController,
-                validator: (email) => !validator(email!)
-                    ? 'Введите правильный Email'
-                    : null,
+                validator: (email) =>
+                    !validator(email!) ? 'Введите правильный Email' : null,
                 decoration: InputDecoration(
                   fillColor: Colors.grey.shade200,
                   border: const OutlineInputBorder(
@@ -149,8 +113,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                 controller: passwordTextRepeatInputController,
                 obscureText: isHiddenPassword,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) => value != null && value.length < 6
-                    ? 'Минимум 6 символов'
+                validator: (value) => value != null && passwordController.text !=value
+                    ? 'Пароли должны совпадать'
                     : null,
                 decoration: InputDecoration(
                   fillColor: Colors.grey.shade200,
@@ -171,7 +135,20 @@ class _SignUpScreen extends State<SignUpScreen> {
               ),
               const SizedBox(height: 30),
               TextButton(
-                onPressed: signUp,
+                onPressed: () {
+                  final isValid = formKey.currentState!.validate();
+                  if (!isValid) return;
+                  ref.read(loginControllerProvider.notifier).signUp(emailController.text.trim(), passwordController.text.trim());
+                  /*unawaited(signUp(
+                    emailController: emailController,
+                    passwordController: passwordController,
+                    passwordTextRepeatInputController:
+                        passwordTextRepeatInputController,
+                  ).signUpAsync(context, () {
+                    if (!mounted) return;
+                    context.goNamed('verify_email');
+                  }));*/
+                },
                 child: const Center(
                     child: Text(
                   'Регистрация',
@@ -193,8 +170,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                     },
                     child: const Text(
                       'войти',
-                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-
+                      style: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
