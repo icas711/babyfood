@@ -2,21 +2,24 @@ import 'dart:async';
 
 import 'package:babyfood/feature/presentation/widgets/services/sign_in_class.dart';
 import 'package:babyfood/feature/presentation/widgets/services/snak_bar_service.dart';
+import 'package:babyfood/feature/presentation/widgets/wm/login_controller.dart';
+import 'package:babyfood/feature/presentation/widgets/wm/login_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginWidget extends StatefulWidget {
+class LoginWidget extends ConsumerStatefulWidget {
   const LoginWidget({super.key});
 
   @override
-  State<LoginWidget> createState() => _LoginWidgetState();
+  LoginWidgetState createState() => LoginWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class LoginWidgetState extends ConsumerState<LoginWidget> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool isHiddenPassword = true;
@@ -44,6 +47,11 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<LoginState>(loginControllerProvider, (previous, next) {
+      if(next is LoginStateError){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.error),backgroundColor: Colors.red,));
+      }
+    });
     return Form(
       key: formKey,
       child: Padding(
@@ -103,13 +111,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                   onPressed: () {
                     final isValid = formKey.currentState!.validate();
                     if (!isValid) return;
+                    ref.read(loginControllerProvider.notifier)
+                        .login(emailController.text.trim(), passwordController.text.trim());
+                    /*final isValid = formKey.currentState!.validate();
+                    if (!isValid) return;
                     unawaited(signIn(
                       emailController: emailController,
                       passwordController: passwordController,
                     ).signInAsync(context, () {
                       if (!mounted) return;
                       context.goNamed('home');
-                    }));
+                    }));*/
                   },
                   child: const Text(
                     'Sign in',

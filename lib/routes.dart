@@ -8,17 +8,21 @@ import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_f
 import 'package:babyfood/feature/presentation/bloc/food_list_cubit/convenience_food_list_state.dart';
 import 'package:babyfood/feature/presentation/bloc/recipe_list_cubit/recipe_list_cubit.dart';
 import 'package:babyfood/feature/presentation/bloc/recipe_list_cubit/recipe_list_state.dart';
-import 'package:babyfood/feature/presentation/pages/account_screen.dart';
+import 'package:babyfood/feature/presentation/pages/user/account_screen.dart';
 import 'package:babyfood/feature/presentation/pages/foods/foods_detail_screen.dart';
 import 'package:babyfood/feature/presentation/pages/foods/foods_screen.dart';
 import 'package:babyfood/feature/presentation/pages/home/home_details_screen.dart';
 import 'package:babyfood/feature/presentation/pages/home/home_screen.dart';
-import 'package:babyfood/feature/presentation/pages/login_screen.dart';
+import 'package:babyfood/feature/presentation/pages/user/login_screen.dart';
 import 'package:babyfood/feature/presentation/pages/recipes/recipe_detail_screen.dart';
 import 'package:babyfood/feature/presentation/pages/recipes/recipes_screen.dart';
 import 'package:babyfood/feature/presentation/pages/settings/setting_screen.dart';
 import 'package:babyfood/feature/presentation/pages/settings/widgets/login_widget.dart';
-import 'package:babyfood/feature/presentation/pages/signup_screen.dart';
+import 'package:babyfood/feature/presentation/pages/user/signup_screen.dart';
+import 'package:babyfood/feature/presentation/pages/user/verify_email_screen.dart';
+import 'package:babyfood/feature/presentation/pages/user/widgets/image_editor.dart';
+import 'package:babyfood/feature/presentation/pages/user/widgets/upload_widget.dart';
+import 'package:babyfood/feature/presentation/widgets/services/auth_checker.dart';
 import 'package:babyfood/main.dart';
 import 'package:babyfood/splash.dart';
 import 'package:flutter/material.dart';
@@ -79,29 +83,45 @@ final goRouter = GoRouter(
                     );
                   },
                 ),
-                GoRoute(
-                  path: 'login',
-                  name: 'login',
-                  pageBuilder: (context, state) => NoTransitionPage(
-                    child: LoginScreen(),
+                /*             GoRoute(
+                  path: 'verify',
+                  name: 'verify',
+                  pageBuilder: (context, state) => const NoTransitionPage(
+                    child: VerifyEmailScreen(),
                   ),
-                ),GoRoute(
+                ),*/
+                GoRoute(
                   path: 'signup',
                   name: 'signup',
-                  pageBuilder: (context, state) => const NoTransitionPage(
-                    child: SignUpScreen(),
-                  ),
+                  builder: (context, state) {
+                    return const SignUpScreen();
+                  },
                 ),
                 GoRoute(
-                  path: 'account',
-                  name: 'account',
+                    path: 'account',
+                    name: 'account',
                   pageBuilder: (context, state) => const NoTransitionPage(
-                    child: AccountScreen(),
+                    child: AuthChecker(),
                   ),
+                  routes: [
+                    GoRoute(
+                      path: 'upload_image',
+                      name: 'upload_image',
+                      builder: (context, state) {
+                        return const UploadWidget();
+                      },
+                    ),
+                    GoRoute(
+                      path: 'edit_image',
+                      name: 'edit_image',
+                      builder: (context, state) {
+                        return const ImageEditorScreen();
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
-
           ],
         ),
         StatefulShellBranch(
