@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final _repaintBoundaryKey = GlobalKey();
 final _movingRectKey = GlobalKey();
@@ -19,7 +21,12 @@ class ImageEditorScreen extends ConsumerWidget {
 
   const ImageEditorScreen({super.key});
 
-
+  Future<String> saveImage(ByteData imageBytes) async {
+    final buffer = imageBytes.buffer;
+    var m = base64.encode(Uint8List.view(buffer));
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return m;//prefs.setString("image", m);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,7 +51,8 @@ class ImageEditorScreen extends ConsumerWidget {
               var firebaseProvider = FirebaseFirestore.instance
                   .collection('accounts')
                   .doc(FirebaseAuth.instance.currentUser!.uid);
-              await firebaseProvider.set({'image': Blob(Uint8List.view(imageByte!.buffer))});
+              final value = await saveImage(imageByte!);
+              await firebaseProvider.set({'image': value});
 context.goNamed('account');
 
             },
@@ -57,7 +65,7 @@ context.goNamed('account');
           key: _movingRectKey,
           child: RepaintBoundary(
             key: _repaintBoundaryKey,
-            child: (ref.watch(uploadImageProvider)!.path!=null)?Image.file(
+            child: (ref.watch(uploadImageProvider)?.path!=null)?Image.file(
               File(ref.watch(uploadImageProvider)!.path),
               errorBuilder:
                   (BuildContext context, Object error, StackTrace? stackTrace) {

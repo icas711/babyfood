@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:babyfood/feature/presentation/providers/auth_provider.dart';
@@ -23,7 +22,6 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final user = ref.watch(authStateProvider);
 
     return user.when(
@@ -53,27 +51,43 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
             children: [
               AccountDetails(),
               //Text(user?.uid ?? 'not signed in',style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),),
-
-              Padding(
+              const Spacer(),
+              /*Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextButton(onPressed: () async {
-
-                  var ref = FirebaseFirestore.instance
-                      .collection('accounts')
-                      .doc(user?.uid);
-                  ref.set({'name': 'Oleg'});
-                }, child: Text('GO')),
+                child: TextButton(
+                    onPressed: () async {
+                      var ref = FirebaseFirestore.instance
+                          .collection('accounts')
+                          .doc(user?.uid);
+                      ref.set({'name': 'Oleg'});
+                    },
+                    child: Text('GO')),
+              ),*/
+              //Text('Ваш Email: ${user?.email}'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                  TextButton(
+                    onPressed: () async {
+                      await signOut();
+                    },
+                    child: const Text('Выйти'),
+                  ),
+                    TextButton(
+                      onPressed: () {
+                      },
+                      child: const Text('Редактировать'),
+                    ),
+                ],
               ),
-              Text('Ваш Email: ${user?.email}'),
-              TextButton(
-                onPressed: () async {await signOut();
-                },
-                child: const Text('Выйти'),
-              ),
+              const SizedBox(
+                height: 16,
+              )
             ],
           ),
         ),
-      ),   error: (e, s) => const Text('error'),
+      ),
+      error: (e, s) => const Text('error'),
       loading: () => const Text('loading'),
     );
   }
