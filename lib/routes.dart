@@ -98,11 +98,11 @@ final goRouter = GoRouter(
                   },
                 ),
                 GoRoute(
-                    path: 'account',
-                    name: 'account',
-                  pageBuilder: (context, state) => const NoTransitionPage(
-                    child: AuthChecker(),
-                  ),
+                  path: 'account',
+                  name: 'account',
+                  builder: (context, state) {
+                    return const AuthChecker();
+                  },
                   routes: [
                     GoRoute(
                       path: 'upload_image',

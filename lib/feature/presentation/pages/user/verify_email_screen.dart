@@ -17,13 +17,12 @@ class VerifyEmailScreen extends ConsumerStatefulWidget {
 class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
   bool isEmailVerified = false;
   bool canResendEmail = false;
-
    Timer? timer;
 
   @override
   void initState() {
+    sendVerificationEmail();
     super.initState();
-
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
     sendVerificationEmail();
        if (!isEmailVerified) {

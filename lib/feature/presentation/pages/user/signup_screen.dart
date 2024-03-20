@@ -47,7 +47,7 @@ class _SignUpScreen extends ConsumerState<SignUpScreen> {
       if(next is LoginStateError){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.error),backgroundColor: Colors.red,));
       }
-      if(next is SentVerifyEmailState)
+      if(next is SignUpStateSuccess)
         {
           context.goNamed('account');
         }
@@ -139,15 +139,6 @@ class _SignUpScreen extends ConsumerState<SignUpScreen> {
                   final isValid = formKey.currentState!.validate();
                   if (!isValid) return;
                   ref.read(loginControllerProvider.notifier).signUp(emailController.text.trim(), passwordController.text.trim());
-                  /*unawaited(signUp(
-                    emailController: emailController,
-                    passwordController: passwordController,
-                    passwordTextRepeatInputController:
-                        passwordTextRepeatInputController,
-                  ).signUpAsync(context, () {
-                    if (!mounted) return;
-                    context.goNamed('verify_email');
-                  }));*/
                 },
                 child: const Center(
                     child: Text(
