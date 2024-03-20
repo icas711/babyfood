@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:babyfood/feature/presentation/providers/auth_provider.dart';
 import 'package:babyfood/feature/presentation/widgets/wm/login_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,28 +25,18 @@ class LoginController extends StateNotifier<LoginState>{
 
     try{
       await ref.read(authRepositoryProvider).createUserWithEmailAndPassword(email, password);
-print('createUserWithEmailAndPassword');
       state=const SignUpStateSuccess();
-
-      await ref.read(authRepositoryProvider).sendEmailVerification();
-      state= const SentVerifyEmailState();
-      print('SentVerifyEmailState');
-
-      /*while(true){
-        if(ref.watch(authRepositoryProvider).emailVerified==true)
-          {
-            print('emailVerified==true');
-            state = const VerifyEmailStateSuccess();
-            break;
-          }
-      }*/
 
     }catch (e){
       state=LoginStateError(e.toString());
     }
 
+
   }
+
+
 }
 
 final loginControllerProvider= StateNotifierProvider<LoginController, LoginState>((ref) =>
 LoginController(ref));
+

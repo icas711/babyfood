@@ -34,6 +34,7 @@ class SignUpStateSuccess extends LoginState{
 
   @override
   List<Object> get props => [];
+
 }
 
 class SentVerifyEmailState extends LoginState{

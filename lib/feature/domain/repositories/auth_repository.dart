@@ -7,17 +7,17 @@ import 'package:rxdart/rxdart.dart';
 class AuthRepository {
   final FirebaseAuth _auth;
 
-  const AuthRepository(this._auth);
-
+  AuthRepository(this._auth);
 
   Stream<User?> get authStateChanges => _auth.idTokenChanges();
+
   Stream<User?> get userChanges => _auth.userChanges();
+
   Stream<User?> get userListener => BehaviorSubject<User?>().stream;
 
   bool get emailVerified => _auth.currentUser!.emailVerified;
 
   Future<void> reload() async => _auth.currentUser!.reload();
-
 
   Future<User?> createUserWithEmailAndPassword(
     String email,
@@ -49,8 +49,8 @@ class AuthRepository {
       if (kDebugMode) {
         print(e.code);
       }
-        throw AuthException(
-            'Неизвестная ошибка! Попробуйте еще раз или обратитесь в поддержку.');
+      throw AuthException(
+          'Неизвестная ошибка! Попробуйте еще раз или обратитесь в поддержку.');
     }
   }
 
@@ -81,6 +81,34 @@ class AuthRepository {
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  Future<void> sendEmail() async {
+    try {
+      await _auth.currentUser!.sendEmailVerification();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  Future<void> streamCheck({required VoidCallback onDone}) async {
+    final stream = Stream.periodic(const Duration(seconds: 2), (t) => t).listen((_) async {
+      await reload();
+      if (_auth.currentUser!.emailVerified) {
+        onDone();
+      }
+    }
+    );
+  }
+
+  String _phone = '';
+
+  String get phone => _phone;
+
+  set phone(String phone) {
+    _phone = phone;
   }
 }
 

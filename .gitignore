@@ -19,6 +19,7 @@ ios/
 *.ipr
 *.iws
 .idea/
+firebase_options.dart
 #lib/feature/data/
 #lib/feature/domain/
 # The .vscode folder contains launch configuration and tasks you configure in
