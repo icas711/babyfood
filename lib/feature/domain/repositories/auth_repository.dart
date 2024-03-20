@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository {
   final FirebaseAuth _auth;
@@ -94,13 +97,13 @@ class AuthRepository {
   }
 
   Future<void> streamCheck({required VoidCallback onDone}) async {
-    final stream = Stream.periodic(const Duration(seconds: 2), (t) => t).listen((_) async {
+    final stream =
+        Stream.periodic(const Duration(seconds: 2), (t) => t).listen((_) async {
       await reload();
       if (_auth.currentUser!.emailVerified) {
         onDone();
       }
-    }
-    );
+    });
   }
 
   String _phone = '';
@@ -110,6 +113,10 @@ class AuthRepository {
   set phone(String phone) {
     _phone = phone;
   }
+
+
+
+
 }
 
 class AuthException implements Exception {

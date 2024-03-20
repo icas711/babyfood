@@ -28,6 +28,7 @@ class _UploadWidgetState extends ConsumerState<UploadWidget> {
         final XFile? pickedFile = await _picker.pickImage(
           source: source,
         );
+        if(pickedFile==null) return;
         ref.read(uploadImageProvider.notifier).update((state) => pickedFile);
         context.goNamed('edit_image');
       } catch (e) {}
