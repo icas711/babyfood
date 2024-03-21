@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:babyfood/feature/presentation/providers/auth_provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AccountScreen extends ConsumerStatefulWidget {
   const AccountScreen({super.key});
@@ -50,20 +50,7 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AccountDetails(),
-              //Text(user?.uid ?? 'not signed in',style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),),
               const Spacer(),
-              /*Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextButton(
-                    onPressed: () async {
-                      var ref = FirebaseFirestore.instance
-                          .collection('accounts')
-                          .doc(user?.uid);
-                      ref.set({'name': 'Oleg'});
-                    },
-                    child: Text('GO')),
-              ),*/
-              //Text('Ваш Email: ${user?.email}'),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -75,6 +62,7 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
                   ),
                     TextButton(
                       onPressed: () {
+                        context.goNamed('edit_account');
                       },
                       child: const Text('Редактировать'),
                     ),

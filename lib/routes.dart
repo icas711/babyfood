@@ -19,9 +19,10 @@ import 'package:babyfood/feature/presentation/pages/recipes/recipes_screen.dart'
 import 'package:babyfood/feature/presentation/pages/settings/setting_screen.dart';
 import 'package:babyfood/feature/presentation/pages/settings/widgets/login_widget.dart';
 import 'package:babyfood/feature/presentation/pages/user/signup_screen.dart';
+import 'package:babyfood/feature/presentation/pages/user/user_edit_screen.dart';
 import 'package:babyfood/feature/presentation/pages/user/verify_email_screen.dart';
 import 'package:babyfood/feature/presentation/pages/user/widgets/image_editor.dart';
-import 'package:babyfood/feature/presentation/pages/user/widgets/upload_widget.dart';
+import 'package:babyfood/feature/presentation/pages/user/upload_screen.dart';
 import 'package:babyfood/feature/presentation/widgets/services/auth_checker.dart';
 import 'package:babyfood/main.dart';
 import 'package:babyfood/splash.dart';
@@ -105,10 +106,17 @@ final goRouter = GoRouter(
                   },
                   routes: [
                     GoRoute(
+                      path: 'edit_account',
+                      name: 'edit_account',
+                      builder: (context, state) {
+                        return const UserEditScreen();
+                      },
+                    ),
+                    GoRoute(
                       path: 'upload_image',
                       name: 'upload_image',
                       builder: (context, state) {
-                        return const UploadWidget();
+                        return const UploadScreen();
                       },
                     ),
                     GoRoute(

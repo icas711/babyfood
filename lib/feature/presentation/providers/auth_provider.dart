@@ -33,16 +33,11 @@ final dataProvider = StreamProvider<Map?>(
 );
 
 // Listen to data in Firestore
-class AccountDetails extends ConsumerStatefulWidget {
-  @override
-  ConsumerState<AccountDetails> createState() => _AccountDetailsState();
-}
+class AccountDetails extends ConsumerWidget {
 
-class _AccountDetailsState extends ConsumerState<AccountDetails> {
-  late final prefs;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     final data = ref.watch(dataProvider);
 
     return data.when(
@@ -77,19 +72,22 @@ class _AccountDetailsState extends ConsumerState<AccountDetails> {
                                       ),
                                     ),
                                   )
-                                : const CircleAvatar(
-                                    radius: 50,
-                                    child: Icon(
-                                      color: Colors.grey,
-                                      Icons.person,
-                                      size: 100,
+                                : const Center(
+                                  child: CircleAvatar(
+                                      radius: 50,
+                                      child: Icon(
+                                        color: Colors.deepOrangeAccent,
+                                        Icons.person,
+                                        size: 100,
+                                      ),
                                     ),
-                                  ),
+                                ),
                           ),
                           const Positioned(
                               right: 0,
                               bottom: 0,
                               child: Icon(
+                                color: Colors.blueAccent,
                                 Icons.edit,
                                 size: 30,
                               ))
