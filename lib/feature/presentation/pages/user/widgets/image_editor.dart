@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
-import 'package:babyfood/feature/presentation/pages/user/widgets/upload_widget.dart';
+import 'package:babyfood/feature/presentation/pages/user/upload_screen.dart';
 import 'package:babyfood/feature/presentation/providers/auth_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

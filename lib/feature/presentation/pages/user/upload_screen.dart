@@ -7,14 +7,14 @@ import 'package:image_picker/image_picker.dart';
 final croppedImageProvider = StateProvider<ByteData?>((ref) => null);
 final uploadImageProvider = StateProvider<XFile?>((ref) => null);
 
-class UploadWidget extends ConsumerStatefulWidget {
-  const UploadWidget({Key? key}) : super(key: key);
+class UploadScreen extends ConsumerStatefulWidget {
+  const UploadScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<UploadWidget> createState() => _UploadWidgetState();
+  ConsumerState<UploadScreen> createState() => _UploadWidgetState();
 }
 
-class _UploadWidgetState extends ConsumerState<UploadWidget> {
+class _UploadWidgetState extends ConsumerState<UploadScreen> {
   String? _retrieveDataError;
 
   final ImagePicker _picker = ImagePicker();

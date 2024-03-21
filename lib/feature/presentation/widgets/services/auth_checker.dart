@@ -1,7 +1,7 @@
 import 'package:babyfood/feature/presentation/pages/user/account_screen.dart';
 import 'package:babyfood/feature/presentation/pages/user/login_screen.dart';
 import 'package:babyfood/feature/presentation/pages/user/verify_email_screen.dart';
-import 'package:babyfood/feature/presentation/pages/user/widgets/upload_widget.dart';
+import 'package:babyfood/feature/presentation/pages/user/upload_screen.dart';
 import 'package:babyfood/feature/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
